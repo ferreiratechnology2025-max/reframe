@@ -1,0 +1,13 @@
+{
+  "name": "default",
+  "font_headings": "Inter",
+  "font_body": "Inter",
+  "primary_color": "#1a73e8",
+  "secondary_color": "#34a853",
+  "accent_color": "#ea4335",
+  "background_color": "#ffffff",
+  "text_color": "#1f1f1f",
+  "border_radius": "8px",
+  "spacing_unit": "16px",
+  "max_width": "1200px"
+}

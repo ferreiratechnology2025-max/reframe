@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ seo.meta_title }}</title>
+    <meta name="description" content="{{ seo.meta_description }}">
+    <meta name="keywords" content="{{ seo.keywords | join(', ') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family={{ design.font_headings | replace(' ', '+') }}:wght@400;600;700&family={{ design.font_body | replace(' ', '+') }}:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: {{ design.primary_color }};
+            --secondary: {{ design.secondary_color }};
+            --accent: {{ design.accent_color }};
+            --bg: {{ design.background_color }};
+            --text: {{ design.text_color }};
+            --radius: {{ design.border_radius }};
+            --spacing: {{ design.spacing_unit }};
+            --max-width: {{ design.max_width }};
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: '{{ design.font_body }}', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: '{{ design.font_headings }}', sans-serif; font-weight: 700; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing); }
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero .btn-primary {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 14px 36px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .section { padding: 60px 0; }
+        .section h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .benefit-card {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid #e9ecef;
+        }
+        .benefit-card h3 { margin-bottom: 12px; color: var(--primary); }
+        .contact-form { max-width: 500px; margin: 0 auto; }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-family: inherit;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>{{ value_proposition.headline }}</h1>
+            {% if value_proposition.subheadline %}
+            <p>{{ value_proposition.subheadline }}</p>
+            {% endif %}
+            <a href="#contact" class="btn-primary">Solicitar Orçamento</a>
+        </div>
+    </section>
+
+    <section class="section" id="benefits">
+        <div class="container">
+            <h2>Por que escolher {{ lead.business_info.name }}?</h2>
+            <div class="benefits-grid">
+                {% for benefit in value_proposition.key_benefits %}
+                <div class="benefit-card">
+                    <h3>{{ benefit }}</h3>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Nome" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Telefone">
+                <textarea rows="4" placeholder="Mensagem"></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 {{ lead.business_info.name }}. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

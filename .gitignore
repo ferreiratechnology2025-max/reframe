@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+ENV/
+*.log
+unsplash_cache.json
+unsplash_cache.json.lock
+.pytest_cache/
+.mypy_cache/
