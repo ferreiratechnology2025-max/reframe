@@ -1,0 +1,697 @@
+{
+  "metrics": {
+    "total": 20,
+    "published": 20,
+    "failed": 0,
+    "judge_failures": 0,
+    "average_deterministic": 4.96875,
+    "average_semantic": 2.596875,
+    "average_total": 3.7828125,
+    "deterministic_passes": 20,
+    "semantic_passes": 0,
+    "total_passes": 2
+  },
+  "results": [
+    {
+      "lead": {
+        "name": "Padaria do Centro",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2001"
+      },
+      "url": "https://propostas.api-plataforma.com/padaria-do-centro-8427a1",
+      "status": "published",
+      "archetype": "padaria",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 2.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 1.5,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.5,
+      "total_score": 3.75
+    },
+    {
+      "lead": {
+        "name": "Café & Pão",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2002"
+      },
+      "url": "https://propostas.api-plataforma.com/cafe-pao-e541be",
+      "status": "published",
+      "archetype": "padaria",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": false,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 4.375,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 3.5,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 1.5,
+        "differentiation": 1.5,
+        "conversion_potential": 2.0
+      },
+      "semantic_score": 2.375,
+      "total_score": 3.375
+    },
+    {
+      "lead": {
+        "name": "Restaurante do Mercado",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2003"
+      },
+      "url": "https://propostas.api-plataforma.com/restaurante-do-mercado-1f75ba",
+      "status": "published",
+      "archetype": "restaurante",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 3.0
+      },
+      "semantic_score": 2.75,
+      "total_score": 3.875
+    },
+    {
+      "lead": {
+        "name": "Cantina Italiana",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2004"
+      },
+      "url": "https://propostas.api-plataforma.com/cantina-italiana-6e4759",
+      "status": "published",
+      "archetype": "restaurante",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 2.5,
+        "cta_quality": 3.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 1.5,
+        "differentiation": 1.5,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.3125,
+      "total_score": 3.65625
+    },
+    {
+      "lead": {
+        "name": "Oficina do Motor",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2005"
+      },
+      "url": "https://propostas.api-plataforma.com/oficina-do-motor-c47afd",
+      "status": "published",
+      "archetype": "mecanica",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.0,
+        "niche_specificity": 2.5,
+        "cta_quality": 3.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 1.5,
+        "differentiation": 2.0,
+        "conversion_potential": 2.0
+      },
+      "semantic_score": 2.25,
+      "total_score": 3.625
+    },
+    {
+      "lead": {
+        "name": "Auto Center",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2006"
+      },
+      "url": "https://propostas.api-plataforma.com/auto-center-3c8158",
+      "status": "published",
+      "archetype": "mecanica",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.625,
+      "total_score": 3.8125
+    },
+    {
+      "lead": {
+        "name": "Barbearia do Lago",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2007"
+      },
+      "url": "https://propostas.api-plataforma.com/barbearia-do-lago-bf1c73",
+      "status": "published",
+      "archetype": "barbearia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 3.0,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 3.0
+      },
+      "semantic_score": 2.75,
+      "total_score": 3.875
+    },
+    {
+      "lead": {
+        "name": "Barbearia Elite",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2008"
+      },
+      "url": "https://propostas.api-plataforma.com/barbearia-elite-2972e7",
+      "status": "published",
+      "archetype": "barbearia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 3.0
+      },
+      "semantic_score": 2.75,
+      "total_score": 3.875
+    },
+    {
+      "lead": {
+        "name": "Salão da Ana",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2009"
+      },
+      "url": "https://propostas.api-plataforma.com/salao-da-ana-ef9144",
+      "status": "published",
+      "archetype": "salao",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 3.0,
+        "niche_specificity": 3.5,
+        "cta_quality": 3.0,
+        "urgency": 1.5,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.6875,
+      "total_score": 3.84375
+    },
+    {
+      "lead": {
+        "name": "Studio Hair",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2010"
+      },
+      "url": "https://propostas.api-plataforma.com/studio-hair-331715",
+      "status": "published",
+      "archetype": "salao",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.0,
+        "niche_specificity": 3.0,
+        "cta_quality": 3.5,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.5,
+      "total_score": 3.75
+    },
+    {
+      "lead": {
+        "name": "Doces e Sabores",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2011"
+      },
+      "url": "https://propostas.api-plataforma.com/doces-e-sabores-ff6c98",
+      "status": "published",
+      "archetype": "confeitaria",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 2.5,
+        "cta_quality": 3.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.4375,
+      "total_score": 3.71875
+    },
+    {
+      "lead": {
+        "name": "Bolo Caseiro",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2012"
+      },
+      "url": "https://propostas.api-plataforma.com/bolo-caseiro-72bee0",
+      "status": "published",
+      "archetype": "confeitaria",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 3.5,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.625,
+      "total_score": 3.8125
+    },
+    {
+      "lead": {
+        "name": "Academia Power",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2013"
+      },
+      "url": "https://propostas.api-plataforma.com/academia-power-919b1d",
+      "status": "published",
+      "archetype": "academia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.5,
+        "b2c_orientation": 4.0,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.6875,
+      "total_score": 3.84375
+    },
+    {
+      "lead": {
+        "name": "CrossBox Goiânia",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2014"
+      },
+      "url": "https://propostas.api-plataforma.com/crossbox-goiania-54f748",
+      "status": "published",
+      "archetype": "academia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 1.5,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.625,
+      "total_score": 3.8125
+    },
+    {
+      "lead": {
+        "name": "Pet Shop do Bairro",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2015"
+      },
+      "url": "https://propostas.api-plataforma.com/pet-shop-do-bairro-d2cc1e",
+      "status": "published",
+      "archetype": "pet_shop",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.0,
+        "niche_specificity": 3.0,
+        "cta_quality": 3.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 1.5,
+        "differentiation": 1.5,
+        "conversion_potential": 2.0
+      },
+      "semantic_score": 2.25,
+      "total_score": 3.625
+    },
+    {
+      "lead": {
+        "name": "Amigo Fiel Pet",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2016"
+      },
+      "url": "https://propostas.api-plataforma.com/amigo-fiel-pet-86c3c0",
+      "status": "published",
+      "archetype": "pet_shop",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 3.0,
+        "urgency": 1.0,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 2.0,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.5625,
+      "total_score": 3.78125
+    },
+    {
+      "lead": {
+        "name": "Moda Feminina",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2017"
+      },
+      "url": "https://propostas.api-plataforma.com/moda-feminina-f0caa6",
+      "status": "published",
+      "archetype": "moda",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 3.5,
+        "niche_specificity": 3.0,
+        "cta_quality": 4.0,
+        "urgency": 1.5,
+        "b2c_orientation": 4.5,
+        "credibility": 2.0,
+        "differentiation": 2.5,
+        "conversion_potential": 3.0
+      },
+      "semantic_score": 3.0,
+      "total_score": 4.0
+    },
+    {
+      "lead": {
+        "name": "Boutique Elegance",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2018"
+      },
+      "url": "https://propostas.api-plataforma.com/boutique-elegance-831dc2",
+      "status": "published",
+      "archetype": "moda",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 3.5,
+        "niche_specificity": 4.0,
+        "cta_quality": 4.5,
+        "urgency": 1.5,
+        "b2c_orientation": 4.5,
+        "credibility": 2.5,
+        "differentiation": 3.0,
+        "conversion_potential": 3.5
+      },
+      "semantic_score": 3.375,
+      "total_score": 4.1875
+    },
+    {
+      "lead": {
+        "name": "Farmácia do Povo",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2019"
+      },
+      "url": "https://propostas.api-plataforma.com/farmacia-do-povo-713556",
+      "status": "published",
+      "archetype": "farmacia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.0,
+        "niche_specificity": 2.5,
+        "cta_quality": 4.0,
+        "urgency": 1.0,
+        "b2c_orientation": 5.0,
+        "credibility": 2.0,
+        "differentiation": 1.5,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.5625,
+      "total_score": 3.78125
+    },
+    {
+      "lead": {
+        "name": "Drogaria Saúde",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2020"
+      },
+      "url": "https://propostas.api-plataforma.com/drogaria-saude-71de44",
+      "status": "published",
+      "archetype": "farmacia",
+      "deterministic": {
+        "has_phone": true,
+        "has_whatsapp": true,
+        "has_name": true,
+        "has_city": true,
+        "has_correct_archetype": true,
+        "has_hero": true,
+        "has_trust_signals": true,
+        "has_valid_html": true
+      },
+      "deterministic_score": 5.0,
+      "semantic": {
+        "headline_clarity": 2.0,
+        "niche_specificity": 2.5,
+        "cta_quality": 3.5,
+        "urgency": 1.0,
+        "b2c_orientation": 4.0,
+        "credibility": 1.5,
+        "differentiation": 1.5,
+        "conversion_potential": 2.5
+      },
+      "semantic_score": 2.3125,
+      "total_score": 3.65625
+    }
+  ],
+  "timestamp": "2026-08-13T21:56:06.629384"
+}

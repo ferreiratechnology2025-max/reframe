@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: #0b0d12;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Seleção */
+::selection {
+  background: rgba(52, 211, 153, 0.25);
+  color: #f4f4f5;
+}
+
+/* Scrollbars finas estilo IDE */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Cursor de streaming do LLM */
+.cursor-blink::after {
+  content: '▍';
+  margin-left: 1px;
+  color: var(--accent, #34d399);
+  animation: ft-blink 1s steps(2, start) infinite;
+}
+@keyframes ft-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Barra de progresso da tela de boot */
+@keyframes ft-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}

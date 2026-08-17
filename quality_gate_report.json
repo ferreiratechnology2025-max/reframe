@@ -1,0 +1,719 @@
+{
+  "metrics": {
+    "total": 33,
+    "published": 30,
+    "failed": 3,
+    "average_quality": 3.6558333333333324,
+    "gate_passed": 1,
+    "needs_review": 29,
+    "rejected": 0
+  },
+  "results": [
+    {
+      "lead": {
+        "name": "Padaria do Centro",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2001"
+      },
+      "url": "https://propostas.api-plataforma.com/padaria-do-centro-1e4e62",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Café & Pão",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2002"
+      },
+      "url": "https://propostas.api-plataforma.com/cafe-pao-562318",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.675,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Panificadora São José",
+        "niche": "padaria",
+        "city": "Anápolis",
+        "phone": "(62) 9999-2003"
+      },
+      "url": "https://propostas.api-plataforma.com/panificadora-sao-jose-bdf65f",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.575,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Restaurante do Mercado",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2004"
+      },
+      "url": "https://propostas.api-plataforma.com/restaurante-do-mercado-f27622",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.5375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Cantina Italiana",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2005"
+      },
+      "url": "https://propostas.api-plataforma.com/cantina-italiana-45b5fe",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 3.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 1.0,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.3125,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Sabor Nordestino",
+        "niche": "restaurante",
+        "city": "Aparecida de Goiânia",
+        "phone": "(62) 9999-2006"
+      },
+      "url": "https://propostas.api-plataforma.com/sabor-nordestino-b20539",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 3.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.575,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Oficina do Motor",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2007"
+      },
+      "url": "https://propostas.api-plataforma.com/oficina-do-motor-780d97",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 4.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 5.0,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 4.1875,
+      "gate": "PASS"
+    },
+    {
+      "lead": {
+        "name": "Auto Center",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2008"
+      },
+      "url": "https://propostas.api-plataforma.com/auto-center-3a1bd4",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.8625,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Barbearia do Lago",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2009"
+      },
+      "url": "https://propostas.api-plataforma.com/barbearia-do-lago-115692",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Barbearia Elite",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2010"
+      },
+      "url": "https://propostas.api-plataforma.com/barbearia-elite-0f562b",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.7,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Salão da Ana",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2011"
+      },
+      "url": "https://propostas.api-plataforma.com/salao-da-ana-658a38",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.6,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Studio Hair",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2012"
+      },
+      "url": "https://propostas.api-plataforma.com/studio-hair-aedfa1",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Doces e Sabores",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2013"
+      },
+      "url": "https://propostas.api-plataforma.com/doces-e-sabores-dad2d8",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.8,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Bolo Caseiro",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2014"
+      },
+      "url": "https://propostas.api-plataforma.com/bolo-caseiro-9d6684",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.7375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Academia Power",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2015"
+      },
+      "url": "https://propostas.api-plataforma.com/academia-power-f2ea8e",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 3.5,
+        "cta_score": 2.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.0,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "CrossBox Goiânia",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2016"
+      },
+      "url": "https://propostas.api-plataforma.com/crossbox-goiania-519b12",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.5375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Pet Shop do Bairro",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2017"
+      },
+      "url": "https://propostas.api-plataforma.com/pet-shop-do-bairro-76fd4c",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 3.5,
+        "cta_score": 4.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.8,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Amigo Fiel Pet",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2018"
+      },
+      "url": "https://propostas.api-plataforma.com/amigo-fiel-pet-60c102",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 3.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.675,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Moda Feminina",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2019"
+      },
+      "url": "https://propostas.api-plataforma.com/moda-feminina-a6e528",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.5375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Boutique Elegance",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2020"
+      },
+      "url": "https://propostas.api-plataforma.com/boutique-elegance-2c9a98",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6625,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Farmácia do Povo",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2021"
+      },
+      "url": "https://propostas.api-plataforma.com/farmacia-do-povo-b08ac9",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.5375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Drogaria Saúde",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2022"
+      },
+      "url": "https://propostas.api-plataforma.com/drogaria-saude-fbb145",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 4.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.7875,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Estrela",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2023"
+      },
+      "url": "https://propostas.api-plataforma.com/estrela-927c92",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.575,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Estrela",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2024"
+      },
+      "url": "https://propostas.api-plataforma.com/estrela-927c92",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.5375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Estrela",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2025"
+      },
+      "url": "https://propostas.api-plataforma.com/estrela-927c92",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 2.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 4.2,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.7125,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "AGF Comércio",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2026"
+      },
+      "url": "https://propostas.api-plataforma.com/agf-comercio-4bac35",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.6,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "JR Serviços",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2027"
+      },
+      "url": "https://propostas.api-plataforma.com/jr-servicos-8b0d4c",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.0,
+        "cta_score": 4.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 3.4000000000000004,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 3.0
+      },
+      "quality_total": 3.9875,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "MC Store",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2028"
+      },
+      "url": "https://propostas.api-plataforma.com/mc-store-2096c2",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.5,
+        "subheadline_score": 4.5,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 1.8,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6625,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Padaria Trindade",
+        "niche": "padaria",
+        "city": "Trindade",
+        "phone": "(62) 9999-2029"
+      },
+      "url": "https://propostas.api-plataforma.com/padaria-trindade-c758b1",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.0,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.575,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Barbearia Senador Canedo",
+        "niche": "barbearia",
+        "city": "Senador Canedo",
+        "phone": "(62) 9999-2030"
+      },
+      "url": "https://propostas.api-plataforma.com/barbearia-senador-canedo-aed6db",
+      "status": "published",
+      "quality": {
+        "headline_score": 4.0,
+        "subheadline_score": 4.0,
+        "cta_score": 3.0,
+        "b2c_score": 4.5,
+        "niche_specificity": 2.6,
+        "visual_coherence": 4.5,
+        "social_proof_score": 4.0,
+        "urgency_score": 2.5
+      },
+      "quality_total": 3.6375,
+      "gate": "REVIEW"
+    },
+    {
+      "lead": {
+        "name": "Clínica Veterinária",
+        "niche": "veterinária",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2031"
+      },
+      "status": "failed",
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'veterinária' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:30:13.359458"
+      }
+    },
+    {
+      "lead": {
+        "name": "Escola de Inglês",
+        "niche": "escola",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2032"
+      },
+      "status": "failed",
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'escola' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:30:13.359458"
+      }
+    },
+    {
+      "lead": {
+        "name": "Contabilidade Prime",
+        "niche": "contabilidade",
+        "city": "Goiânia",
+        "phone": "(62) 9999-2033"
+      },
+      "status": "failed",
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'contabilidade' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:30:13.359458"
+      }
+    }
+  ],
+  "timestamp": "2026-08-13T20:30:13.359458"
+}

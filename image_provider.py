@@ -1,106 +1,101 @@
 import os
 import json
-import logging
 import hashlib
-from typing import Optional
-
+import logging
 import requests
 from filelock import FileLock
 
-logger = logging.getLogger(__name__)
-
 CACHE_FILE = "unsplash_cache.json"
-LOCK_FILE = CACHE_FILE + ".lock"
+LOCK_FILE = f"{CACHE_FILE}.lock"
 
-UNSPLASH_BASE = "https://api.unsplash.com"
-PICSUM_BASE = "https://picsum.photos"
-
-
-def _load_cache():
-    try:
-        if os.path.exists(CACHE_FILE):
-            with open(CACHE_FILE, "r") as f:
-                return json.load(f)
-    except (json.JSONDecodeError, OSError):
-        pass
-    return {}
+# Configuração de logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def _save_cache(cache: dict):
+def get_hero_image(keywords: list[str], slug: str) -> str:
+    """
+    Retorna URL de imagem otimizada. Unsplash (primário) com fallback Picsum determinístico.
+    
+    Args:
+        keywords: Lista de keywords para busca (ex: ["padaria", "pão artesanal"])
+        slug: Slug único do lead (usado para gerar sufixo de cache)
+    
+    Returns:
+        URL da imagem com sufixo único por lead
+    """
+    cache_key = "_".join(sorted(keywords)).lower().replace(" ", "-")
+    
     with FileLock(LOCK_FILE):
-        with open(CACHE_FILE, "w") as f:
+        cache = {}
+        if os.path.exists(CACHE_FILE):
+            try:
+                with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                    cache = json.load(f)
+            except json.JSONDecodeError:
+                cache = {}
+
+        # Suporte a migração de cache antigo (string pura) e leitura de metadados
+        if cache_key in cache:
+            entry = cache[cache_key]
+            if isinstance(entry, str):
+                # Cache legado: retorna direto (sem sufixo único, mas funciona)
+                return entry
+            
+            # Se já temos uma imagem válida (Unsplash ou Picsum), retorna a URL base
+            base_url = entry.get("url", "")
+            if not base_url:
+                # Entry corrompido, remove e regenera
+                del cache[cache_key]
+                with open(CACHE_FILE, "w", encoding="utf-8") as f:
+                    json.dump(cache, f, indent=2)
+            else:
+                # Adiciona sufixo único por lead para quebrar cache de navegador
+                unique_sig = hashlib.md5(slug.encode()).hexdigest()[:6]
+                separator = "&" if "?" in base_url else "?"
+                return f"{base_url}{separator}v={unique_sig}"
+
+        final_url = ""
+        source = "picsum"
+        unsplash_key = os.getenv("UNSPLASH_ACCESS_KEY")
+
+        if unsplash_key:
+            try:
+                query = keywords[0] if keywords else "business"
+                
+                # Autenticação via Header (prática segura, sem vazamento em URL)
+                headers = {"Authorization": f"Client-ID {unsplash_key}"}
+                
+                # orientation=landscape garante proporção adequada para hero 1200x600
+                params = {"query": query, "orientation": "landscape"}
+                
+                resp = requests.get(
+                    "https://api.unsplash.com/photos/random",
+                    headers=headers,
+                    params=params,
+                    timeout=5
+                )
+                resp.raise_for_status()  # Lança HTTPError para 4xx/5xx
+                
+                final_url = resp.json()["urls"]["regular"]
+                source = "unsplash"
+                logging.info(f"Unsplash: imagem obtida para keyword '{query}'")
+                
+            except Exception as e:
+                # Log explícito: operador saberá que o fallback foi acionado
+                logging.warning(f"Unsplash falhou para keyword '{query}': {e}. Fallback Picsum ativado.")
+
+        if not final_url:
+            # Fallback determinístico: Picsum (Seed no PATH, não na query)
+            seed_hash = hashlib.md5(f"{cache_key}-{slug}".encode()).hexdigest()[:8]
+            final_url = f"https://picsum.photos/seed/{seed_hash}/1200/600"
+            source = "picsum"
+
+        # Cache armazena metadados para auditoria e invalidação seletiva
+        cache[cache_key] = {"url": final_url, "source": source}
+        with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(cache, f, indent=2)
-
-
-def _cache_key(prompt: str, width: int, height: int) -> str:
-    raw = f"{prompt.lower().strip()}:{width}x{height}"
-    return hashlib.md5(raw.encode()).hexdigest()
-
-
-def fetch_image(prompt: str, width: int = 1200, height: int = 800) -> Optional[dict]:
-    cache = _load_cache()
-    key = _cache_key(prompt, width, height)
-
-    if key in cache:
-        logger.info("Image cache hit for '%s'", prompt)
-        return cache[key]
-
-    result = _search_fetch_picsum(prompt, width, height)
-    if result:
-        cache[key] = result
-        _save_cache(cache)
-        return result
-
-    result = _search_fetch_unsplash(prompt, width, height)
-    if result:
-        cache[key] = result
-        _save_cache(cache)
-        return result
-
-    logger.warning("No image found for prompt: %s", prompt)
-    return None
-
-
-def _search_fetch_unsplash(prompt: str, width: int, height: int) -> Optional[dict]:
-    access_key = os.getenv("UNSPLASH_ACCESS_KEY", "")
-    if not access_key:
-        return None
-
-    try:
-        resp = requests.get(
-            f"{UNSPLASH_BASE}/search/photos",
-            params={"query": prompt, "per_page": 1, "orientation": "landscape"},
-            headers={"Authorization": f"Client-ID {access_key}"},
-            timeout=15,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        if data.get("results"):
-            photo = data["results"][0]
-            img_url = photo["urls"]["raw"] + f"&w={width}&h={height}&fit=crop"
-            return {
-                "url": img_url,
-                "alt": photo.get("alt_description", prompt),
-                "source": "unsplash",
-                "prompt_used": prompt,
-            }
-    except Exception as e:
-        logger.warning("Unsplash search failed: %s", e)
-    return None
-
-
-def _search_fetch_picsum(prompt: str, width: int, height: int) -> Optional[dict]:
-    try:
-        seed = hashlib.md5(prompt.encode()).hexdigest()[:8]
-        url = f"{PICSUM_BASE}/seed/{seed}/{width}/{height}"
-        resp = requests.get(url, timeout=10)
-        if resp.status_code < 400:
-            return {
-                "url": str(resp.url),
-                "alt": prompt,
-                "source": "picsum",
-                "prompt_used": prompt,
-            }
-    except Exception as e:
-        logger.debug("Picsum fetch failed: %s", e)
-    return None
+        
+        # Retorna com sufixo único por lead
+        unique_sig = hashlib.md5(slug.encode()).hexdigest()[:6]
+        separator = "&" if "?" in final_url else "?"
+        return f"{final_url}{separator}v={unique_sig}"

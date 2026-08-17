@@ -1,0 +1,168 @@
+{
+  "timestamp": "2026-08-13T19:43:42.734589",
+  "total": 10,
+  "published": 10,
+  "failed": 0,
+  "results": [
+    {
+      "lead": {
+        "name": "Padaria do Pão Quente",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0001"
+      },
+      "generation_id": "gen_batch_1",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/padaria-do-pao-quente-4e114b",
+      "archetype": "padaria",
+      "color": "#D97706",
+      "headline": "Padaria do Pão Quente: O melhor pão de Goiânia",
+      "duration": 4.823307,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Restaurante Sabor Caseiro",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0002"
+      },
+      "generation_id": "gen_batch_2",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/restaurante-sabor-caseiro-08ac0e",
+      "archetype": "restaurante",
+      "color": "#B91C1C",
+      "headline": "Sabor Caseiro: O Melhor Restaurante de Goiânia",
+      "duration": 4.125905,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Oficina do João",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0003"
+      },
+      "generation_id": "gen_batch_3",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/oficina-do-joao-2126d9",
+      "archetype": "mecanica",
+      "color": "#1E40AF",
+      "headline": "Oficina do João: A Mecânica de Confiança em Goiânia",
+      "duration": 4.186803,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Barbearia Vintage",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0004"
+      },
+      "generation_id": "gen_batch_4",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/barbearia-vintage-0ffc4e",
+      "archetype": "barbearia",
+      "color": "#1C1917",
+      "headline": "Barbearia Vintage: A Melhor Barbearia de Goiânia",
+      "duration": 4.393235,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Salão Bella",
+        "niche": "salão",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0005"
+      },
+      "generation_id": "gen_batch_5",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/salao-bella-32e12a",
+      "archetype": "salao",
+      "color": "#BE185D",
+      "headline": "Salão Bella: O melhor salão de Goiânia",
+      "duration": 4.572106,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Confeitaria Doce Sabor",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0006"
+      },
+      "generation_id": "gen_batch_6",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/confeitaria-doce-sabor-f040dc",
+      "archetype": "confeitaria",
+      "color": "#D97706",
+      "headline": "Confeitaria Doce Sabor: O Melhor Sabor de Goiânia",
+      "duration": 4.439126,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Academia Fit Life",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0007"
+      },
+      "generation_id": "gen_batch_7",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/academia-fit-life-1e222c",
+      "archetype": "academia",
+      "color": "#16A34A",
+      "headline": "Academia Fit Life: A melhor academia de Goiânia",
+      "duration": 5.434604,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Pet Shop Amigo Bicho",
+        "niche": "pet_shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0008"
+      },
+      "generation_id": "gen_batch_8",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/pet-shop-amigo-bicho-469cb6",
+      "archetype": "pet_shop",
+      "color": "#0891B2",
+      "headline": "Pet Shop Amigo Bicho: O melhor pet shop de Goiânia",
+      "duration": 5.202025,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Moda & Estilo",
+        "niche": "loja_roupas",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0009"
+      },
+      "generation_id": "gen_batch_9",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/moda-estilo-7e4672",
+      "archetype": "moda",
+      "color": "#7C3AED",
+      "headline": "Moda & Estilo: A melhor loja de roupas de Goiânia",
+      "duration": 4.248837,
+      "proofs": 3
+    },
+    {
+      "lead": {
+        "name": "Farmácia Popular",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0010"
+      },
+      "generation_id": "gen_batch_10",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/farmacia-popular-8fa350",
+      "archetype": "farmacia",
+      "color": "#059669",
+      "headline": "Farmácia Popular: Sua Saúde em Primeiras Mãos em Goiânia",
+      "duration": 3.946158,
+      "proofs": 3
+    }
+  ]
+}

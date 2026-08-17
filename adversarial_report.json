@@ -1,0 +1,427 @@
+{
+  "metrics": {
+    "total": 25,
+    "published": 16,
+    "failed": 9,
+    "archetype_correct": 16,
+    "archetype_evaluated": 16,
+    "unknown_niche_handled": 7,
+    "unknown_niche_expected": 7,
+    "durations": [
+      8.673874,
+      0.0,
+      5.537923,
+      5.20469,
+      0.0,
+      7.417351,
+      5.269238,
+      4.032761,
+      5.901985,
+      4.064968,
+      0.0,
+      6.598472,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      8.593555,
+      4.931378,
+      4.501771,
+      5.52195,
+      4.170727,
+      13.279387,
+      5.701388,
+      1.138509,
+      1.085671
+    ],
+    "total_duration": 101.62559800000001,
+    "errors": []
+  },
+  "results": [
+    {
+      "lead": {
+        "name": "Barbearia do Zé",
+        "niche": "barbearia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0101"
+      },
+      "generation_id": "gen_adv_1",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/barbearia-do-ze-4ad0ae",
+      "archetype": "barbearia",
+      "expected_archetype": "barbearia",
+      "archetype_correct": true,
+      "duration": 8.673874
+    },
+    {
+      "lead": {
+        "name": "Barber Shop Moderno",
+        "niche": "barber shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0102"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'barber shop' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:02.440682"
+      }
+    },
+    {
+      "lead": {
+        "name": "Barbearia Masculina",
+        "niche": "barbearia masculina",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0103"
+      },
+      "generation_id": "gen_adv_3",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/barbearia-masculina-ffaae2",
+      "archetype": "barbearia",
+      "expected_archetype": "barbearia",
+      "archetype_correct": true,
+      "duration": 5.537923
+    },
+    {
+      "lead": {
+        "name": "Salão Bella Vista",
+        "niche": "salão de beleza",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0104"
+      },
+      "generation_id": "gen_adv_4",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/salao-bella-vista-16a3f3",
+      "archetype": "salao",
+      "expected_archetype": "salao",
+      "archetype_correct": true,
+      "duration": 5.20469
+    },
+    {
+      "lead": {
+        "name": "Beauty Salon",
+        "niche": "beauty salon",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0105"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'beauty salon' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:13.183295"
+      }
+    },
+    {
+      "lead": {
+        "name": "Padaria do Pão",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0106"
+      },
+      "generation_id": "gen_adv_6",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/padaria-do-pao-318793",
+      "archetype": "padaria",
+      "expected_archetype": "padaria",
+      "archetype_correct": true,
+      "duration": 7.417351
+    },
+    {
+      "lead": {
+        "name": "Panificadora Central",
+        "niche": "panificadora",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0107"
+      },
+      "generation_id": "gen_adv_7",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/panificadora-central-f6fa87",
+      "archetype": "padaria",
+      "expected_archetype": "padaria",
+      "archetype_correct": true,
+      "duration": 5.269238
+    },
+    {
+      "lead": {
+        "name": "Confeitaria Doce",
+        "niche": "confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0108"
+      },
+      "generation_id": "gen_adv_8",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/confeitaria-doce-d6318f",
+      "archetype": "confeitaria",
+      "expected_archetype": "confeitaria",
+      "archetype_correct": true,
+      "duration": 4.032761
+    },
+    {
+      "lead": {
+        "name": "Padaria e Confeitaria",
+        "niche": "padaria e confeitaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0109"
+      },
+      "generation_id": "gen_adv_9",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/padaria-e-confeitaria-e64a2d",
+      "archetype": "padaria",
+      "expected_archetype": "padaria",
+      "archetype_correct": true,
+      "duration": 5.901985
+    },
+    {
+      "lead": {
+        "name": "Restaurante Gourmet",
+        "niche": "restaurante",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0110"
+      },
+      "generation_id": "gen_adv_10",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/restaurante-gourmet-9ba156",
+      "archetype": "restaurante",
+      "expected_archetype": "restaurante",
+      "archetype_correct": true,
+      "duration": 4.064968
+    },
+    {
+      "lead": {
+        "name": "Lanchonete do Bairro",
+        "niche": "lanchonete",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0111"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'lanchonete' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:39.869598"
+      }
+    },
+    {
+      "lead": {
+        "name": "Academia Power",
+        "niche": "academia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0112"
+      },
+      "generation_id": "gen_adv_12",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/academia-power-f2ea8e",
+      "archetype": "academia",
+      "expected_archetype": "academia",
+      "archetype_correct": true,
+      "duration": 6.598472
+    },
+    {
+      "lead": {
+        "name": "Centro de Treinamento",
+        "niche": "centro de treinamento",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0113"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'centro de treinamento' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:46.468070"
+      }
+    },
+    {
+      "lead": {
+        "name": "Clínica Veterinária",
+        "niche": "veterinária",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0114"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'veterinária' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:46.468070"
+      }
+    },
+    {
+      "lead": {
+        "name": "Escola de Idiomas",
+        "niche": "escola de idiomas",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0115"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'escola de idiomas' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:46.468070"
+      }
+    },
+    {
+      "lead": {
+        "name": "Consultório Dentário",
+        "niche": "dentista",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0116"
+      },
+      "status": "failed",
+      "expected_archetype": null,
+      "error": {
+        "code": "ARCHETYPE_NOT_SUPPORTED",
+        "message": "Nicho não suportado pelo Reframe ainda. Nenhuma landing foi publicada.",
+        "detail": "ARCHETYPE_NOT_SUPPORTED: Nicho 'dentista' não possui arquétipo mapeado. Suportados: ['padaria', 'mecanica', 'restaurante', 'barbearia', 'salao', 'confeitaria', 'academia', 'pet_shop', 'moda', 'farmacia']",
+        "timestamp": "2026-08-13T20:01:46.468070"
+      }
+    },
+    {
+      "lead": {
+        "name": "Oficina Mecânica",
+        "niche": "mecânica",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0117"
+      },
+      "generation_id": "gen_adv_17",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/oficina-mecanica-5c6bd4",
+      "archetype": "mecanica",
+      "expected_archetype": "mecanica",
+      "archetype_correct": true,
+      "duration": 8.593555
+    },
+    {
+      "lead": {
+        "name": "Mecânica de Motos",
+        "niche": "mecânica de motos",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0118"
+      },
+      "generation_id": "gen_adv_18",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/mecanica-de-motos-166e71",
+      "archetype": "mecanica",
+      "expected_archetype": "mecanica",
+      "archetype_correct": true,
+      "duration": 4.931378
+    },
+    {
+      "lead": {
+        "name": "Farmácia Popular",
+        "niche": "farmácia",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0119"
+      },
+      "generation_id": "gen_adv_19",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/farmacia-popular-8fa350",
+      "archetype": "farmacia",
+      "expected_archetype": "farmacia",
+      "archetype_correct": true,
+      "duration": 4.501771
+    },
+    {
+      "lead": {
+        "name": "Drogaria Central",
+        "niche": "drogaria",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0120"
+      },
+      "generation_id": "gen_adv_20",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/drogaria-central-ff3ab5",
+      "archetype": "farmacia",
+      "expected_archetype": "farmacia",
+      "archetype_correct": true,
+      "duration": 5.52195
+    },
+    {
+      "lead": {
+        "name": "Pet Shop Amigo",
+        "niche": "pet shop",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0121"
+      },
+      "generation_id": "gen_adv_21",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/pet-shop-amigo-3c3300",
+      "archetype": "pet_shop",
+      "expected_archetype": "pet_shop",
+      "archetype_correct": true,
+      "duration": 4.170727
+    },
+    {
+      "lead": {
+        "name": "Loja de Roupas",
+        "niche": "moda",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0122"
+      },
+      "generation_id": "gen_adv_22",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/loja-de-roupas-f4cd8a",
+      "archetype": "moda",
+      "expected_archetype": "moda",
+      "archetype_correct": true,
+      "duration": 13.279387
+    },
+    {
+      "lead": {
+        "name": "Moda Infantil",
+        "niche": "moda infantil",
+        "city": "Goiânia",
+        "phone": "(62) 9999-0123"
+      },
+      "generation_id": "gen_adv_23",
+      "status": "published",
+      "url": "https://propostas.api-plataforma.com/moda-infantil-f9ee79",
+      "archetype": "moda",
+      "expected_archetype": "moda",
+      "archetype_correct": true,
+      "duration": 5.701388
+    },
+    {
+      "lead": {
+        "name": "Sem Telefone",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": ""
+      },
+      "status": "failed",
+      "expected_archetype": "padaria",
+      "error": {
+        "code": "INVALID_LEAD",
+        "message": "Dados do lead inválidos. Verifique as informações.",
+        "detail": "INVALID_LEAD: Dados de negócio inválidos: 1 validation error for BusinessData\nphone\n  Value error, Telefone é obrigatório para geração de proposta com CTA WhatsApp. [type=value_error, input_value='', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error",
+        "timestamp": "2026-08-13T20:02:34.306735"
+      }
+    },
+    {
+      "lead": {
+        "name": "Telefone Curto",
+        "niche": "padaria",
+        "city": "Goiânia",
+        "phone": "123"
+      },
+      "status": "failed",
+      "expected_archetype": "padaria",
+      "error": {
+        "code": "INVALID_LEAD",
+        "message": "Dados do lead inválidos. Verifique as informações.",
+        "detail": "INVALID_LEAD: Dados de negócio inválidos: 1 validation error for BusinessData\nphone\n  Value error, Telefone inválido: 123. Esperado 55 + DDD + 8-9 dígitos. [type=value_error, input_value='123', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error",
+        "timestamp": "2026-08-13T20:02:35.392406"
+      }
+    }
+  ],
+  "timestamp": "2026-08-13T20:02:35.392406"
+}
