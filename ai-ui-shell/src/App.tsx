@@ -12,6 +12,7 @@ import { Terminal } from './components/workspace/Terminal';
 import { Leads } from './projects/reframe/pages/Leads';
 import { NewLead } from './projects/reframe/pages/NewLead';
 import { GenerationTracker } from './projects/reframe/pages/GenerationTracker';
+import { Dashboard } from './projects/reframe/pages/Dashboard';
 import type { ViewKey } from './types';
 
 function Shell() {
@@ -60,6 +61,7 @@ function Shell() {
               <Route path="/leads/new" element={<NewLead />} />
               <Route path="/generation/new" element={<GenerationTracker />} />
               <Route path="/generation/:id" element={<GenerationTracker />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route
                 path="/chat"
                 element={

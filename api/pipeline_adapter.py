@@ -85,6 +85,8 @@ class PipelineAdapter:
             # Atualiza com os resultados
             gen.status = "published"
             gen.archetype_name = result.get("archetype_name")
+            gen.personality = result.get("personality")
+            gen.position = result.get("position")
             gen.primary_color = result.get("primary_color")
             gen.hero_image = result.get("hero_image")
             gen.proofs = result.get("proofs", [])

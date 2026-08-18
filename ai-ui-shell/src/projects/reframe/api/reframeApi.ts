@@ -50,6 +50,8 @@ export interface Generation {
   lead_id: string;
   status: 'queued' | 'generating' | 'rendering' | 'publishing' | 'published' | 'failed';
   archetype_name?: string;
+  personality?: string;
+  position?: string;
   primary_color?: string;
   hero_image?: string;
   proofs: string[];
@@ -99,6 +101,19 @@ export const reframeApi = {
     const res = await fetch(`${BASE_URL}/api/leads/${id}`);
     if (!res.ok) throw new Error('Failed to fetch lead');
     return res.json();
+  },
+
+  // Demo: cria lead + geração em um único passo (contrato real da API: 2 chamadas)
+  async generateDemo(data: {
+    name: string;
+    niche: string;
+    city: string;
+    phone: string;
+    place_id?: string;
+  }): Promise<{ lead: Lead; generation: Generation }> {
+    const lead = await this.createLead(data);
+    const generation = await this.createGeneration(lead.id);
+    return { lead, generation };
   },
 
   // Generations

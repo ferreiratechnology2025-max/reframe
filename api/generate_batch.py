@@ -18,16 +18,9 @@ from api.app import leads_db, generations_db, Lead, GenerationStatus
 from api.pipeline_adapter import PipelineAdapter
 
 BATCH_LEADS = [
-    {"name": "Padaria do Pão Quente", "niche": "padaria", "city": "Goiânia", "phone": "(62) 9999-0001"},
-    {"name": "Restaurante Sabor Caseiro", "niche": "restaurante", "city": "Goiânia", "phone": "(62) 9999-0002"},
-    {"name": "Oficina do João", "niche": "mecânica", "city": "Goiânia", "phone": "(62) 9999-0003"},
-    {"name": "Barbearia Vintage", "niche": "barbearia", "city": "Goiânia", "phone": "(62) 9999-0004"},
-    {"name": "Salão Bella", "niche": "salão", "city": "Goiânia", "phone": "(62) 9999-0005"},
-    {"name": "Confeitaria Doce Sabor", "niche": "confeitaria", "city": "Goiânia", "phone": "(62) 9999-0006"},
-    {"name": "Academia Fit Life", "niche": "academia", "city": "Goiânia", "phone": "(62) 9999-0007"},
-    {"name": "Pet Shop Amigo Bicho", "niche": "pet_shop", "city": "Goiânia", "phone": "(62) 9999-0008"},
-    {"name": "Moda & Estilo", "niche": "loja_roupas", "city": "Goiânia", "phone": "(62) 9999-0009"},
-    {"name": "Farmácia Popular", "niche": "farmácia", "city": "Goiânia", "phone": "(62) 9999-0010"},
+    {"name": "Clínica Dra. Andrielle", "niche": "estetica", "city": "Goiânia", "phone": "+5562999999999"},
+    {"name": "Academia Performance", "niche": "academia", "city": "Goiânia", "phone": "+5562888888888"},
+    {"name": "Barbearia do Mário", "niche": "barbearia", "city": "Goiânia", "phone": "+5562777777777"},
 ]
 
 async def generate_batch() -> List[Dict[str, Any]]:

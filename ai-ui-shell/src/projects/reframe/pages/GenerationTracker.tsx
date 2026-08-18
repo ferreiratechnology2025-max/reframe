@@ -202,6 +202,14 @@ function GenerationStatus({ generation, onBack }: { generation: Generation; onBa
               <p className="text-white font-medium">{generation.archetype_name || '-'}</p>
             </div>
             <div>
+              <span className="text-zinc-500">Posição de mercado</span>
+              <p className="text-white font-medium capitalize">{generation.position || '-'}</p>
+            </div>
+            <div>
+              <span className="text-zinc-500">Template visual</span>
+              <p className="text-white font-medium">{generation.personality || '-'}</p>
+            </div>
+            <div>
               <span className="text-zinc-500">Cor primária</span>
               <div className="flex items-center gap-2 mt-0.5">
                 <div

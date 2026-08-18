@@ -55,12 +55,20 @@ export function Leads() {
             {leads.length} leads cadastrados
           </p>
         </div>
-        <button
-          onClick={() => navigate('/leads/new')}
-          className="px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition"
-        >
-          + Novo Lead
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="px-4 py-2 rounded-lg bg-white/[0.03] text-zinc-300 border border-white/[0.06] hover:bg-white/[0.06] transition"
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => navigate('/leads/new')}
+            className="px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition"
+          >
+            + Novo Lead
+          </button>
+        </div>
       </div>
 
       {leads.length === 0 ? (

@@ -52,6 +52,8 @@ class GenerationStatus(BaseModel):
     lead_id: str
     status: str = "queued"  # queued | generating | validating | rendering | publishing | published | failed
     archetype_name: Optional[str] = None
+    personality: Optional[str] = None  # VisualTemplate.id (VS-2)
+    position: Optional[str] = None  # MarketPosition.value (VS-1/VS-2)
     primary_color: Optional[str] = None
     hero_image: Optional[str] = None
     proofs: List[str] = []
