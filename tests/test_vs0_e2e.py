@@ -60,21 +60,126 @@ def _demo_input() -> DemoInput:
     )
 
 
+NICHES_EXPECTED = [
+    (
+        "estetica",
+        DemoInput(
+            business_name="Clínica Dra. Andrielle Fernandes",
+            niche="estetica",
+            city="Goiânia",
+            whatsapp="+5562999999999",
+            place_id="ChIJN1t_tDeuEmsRUsoyN83rY4Q",
+            evidence={"rating": 4.8, "total_ratings": 327, "specialties": ["facial", "injetáveis"]},
+            location={
+                "address_line": "Av. T-63, 1299 — Setor Bueno",
+                "neighborhood": "Setor Bueno",
+                "city": "Goiânia",
+                "state": "GO",
+                "latitude": -16.6869,
+                "longitude": -49.2648,
+                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6869,-49.2648",
+                "source": "google_places",
+                "source_ref": "ChIJN1t_tDeuEmsRUsoyN83rY4Q",
+                "status": "verified",
+                "confidence": 0.95,
+            },
+        ),
+        {
+            "personality": "premium_clinical",
+            "position": "PREMIUM",
+            "primary_color": "#C6A87C",
+            "bg": "#F5F3F0",
+            "accent": "#C6A87C",
+            "archetype": "prestigio_clinico",
+        },
+    ),
+    (
+        "academia",
+        DemoInput(
+            business_name="Academia Performance Prime",
+            niche="academia",
+            city="Goiânia",
+            whatsapp="+5562999999999",
+            place_id="demo-academia",
+            evidence={"rating": 4.7, "total_ratings": 512, "specialties": ["musculação", "funcional"]},
+            location={
+                "address_line": "Av. Anhanguera, 450 — Centro",
+                "neighborhood": "Centro",
+                "city": "Goiânia",
+                "state": "GO",
+                "latitude": -16.6864,
+                "longitude": -49.2643,
+                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6864,-49.2643",
+                "source": "google_places",
+                "source_ref": "demo-academia",
+                "status": "verified",
+                "confidence": 0.9,
+            },
+        ),
+        {
+            "personality": "performance_result",
+            "position": "PERFORMANCE",
+            "primary_color": "#E63946",
+            "bg": "#FFFFFF",
+            "accent": "#E63946",
+            "archetype": "forca_disciplina",
+        },
+    ),
+    (
+        "barbearia",
+        DemoInput(
+            business_name="Barbearia Central",
+            niche="barbearia",
+            city="Goiânia",
+            whatsapp="+5562999999999",
+            place_id="demo-barbearia",
+            evidence={"rating": 4.9, "total_ratings": 891, "specialties": ["corte clássico", "barba"]},
+            location={
+                "address_line": "Rua 3, 120 — Setor Central",
+                "neighborhood": "Setor Central",
+                "city": "Goiânia",
+                "state": "GO",
+                "latitude": -16.6799,
+                "longitude": -49.2550,
+                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6799,-49.2550",
+                "source": "google_places",
+                "source_ref": "demo-barbearia",
+                "status": "verified",
+                "confidence": 0.9,
+            },
+        ),
+        {
+            "personality": "bold_urban",
+            "position": "MODERN",
+            "primary_color": "#D4AF37",
+            "bg": "#1A1A1A",
+            "accent": "#D4AF37",
+            "archetype": "estilo_urbano",
+        },
+    ),
+]
+
+
+@pytest.mark.parametrize(
+    "niche,demo,expected",
+    NICHES_EXPECTED,
+    ids=[n for n, _, _ in NICHES_EXPECTED],
+)
 @pytest.mark.asyncio
-async def test_vs0_e2e_published():
+async def test_vs0_e2e_published(niche, demo, expected):
     if not _env_ready():
         pytest.skip("Credenciais LLM/R2 ausentes — E2E real pulado")
 
-    result = await generate_demo(_demo_input())
+    result = await generate_demo(demo)
 
-    assert result["status"] == "published", f"Falhou: {result}"
-    assert result["personality"] == "premium_clinical"
-    assert result["position"] == "PREMIUM"
-    assert result["url"].startswith("https://")
-    assert result["primary_color"] == "#C6A87C"
-    assert result["tokens"]["colors"]["bg"] == "#F5F3F0"
-    assert result["tokens"]["colors"]["accent"] == "#C6A87C"
-    assert result["archetype_name"] == "prestigio_clinico"
+    assert result["status"] == "published", f"[{niche}] Falhou: {result}"
+    assert result["personality"] == expected["personality"], result
+    assert result["position"] == expected["position"], result
+    assert result["url"].startswith("https://"), result
+    assert result["primary_color"] == expected["primary_color"], result
+    assert result["tokens"]["colors"]["bg"] == expected["bg"], result
+    assert result["tokens"]["colors"]["accent"] == expected["accent"], result
+    assert result["archetype_name"] == expected["archetype"], result
 
 
 @pytest.mark.asyncio

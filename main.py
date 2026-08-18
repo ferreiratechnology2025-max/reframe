@@ -201,6 +201,7 @@ def _archetype_tokens_css(primary_color: str) -> str:
             ColorRole.ACCENT: primary_color,
             ColorRole.ACCENT_HOVER: primary_color,
             ColorRole.ON_ACCENT: "#FFFFFF",
+            ColorRole.ON_OVERLAY: "#FFFFFF",
         },
         semantic_colors={
             SemanticColor.SUCCESS: "#2E7D32",

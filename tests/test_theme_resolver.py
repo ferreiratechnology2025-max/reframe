@@ -46,3 +46,20 @@ class TestThemeResolution:
             resolver.resolve("estetica", MarketPosition.PREMIUM)
             == resolver.resolve("estetica", MarketPosition.PREMIUM)
         )
+
+    def test_academia_performance_maps_to_performance_result(self, resolver):
+        personality = resolver.resolve("academia", MarketPosition.PERFORMANCE)
+        assert personality == VisualPersonality.PERFORMANCE_RESULT
+
+    def test_barbearia_modern_maps_to_bold_urban(self, resolver):
+        personality = resolver.resolve("barbearia", MarketPosition.MODERN)
+        assert personality == VisualPersonality.BOLD_URBAN
+
+    def test_academia_wrong_position_raises(self, resolver):
+        """academia com posição errada não mapeia (sem fallback)."""
+        with pytest.raises(ThemeResolutionError):
+            resolver.resolve("academia", MarketPosition.PREMIUM)
+
+    def test_barbearia_wrong_position_raises(self, resolver):
+        with pytest.raises(ThemeResolutionError):
+            resolver.resolve("barbearia", MarketPosition.PERFORMANCE)

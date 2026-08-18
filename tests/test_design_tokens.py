@@ -127,3 +127,57 @@ class TestCssVariables:
             body=FontSpec(family="Arial", source="system", weights=[400]),
         ))
         assert tokens.get_font_links() == ""
+
+
+class TestGeneralizationTokens:
+    """Generalization Slice — todas as personalidades têm tokens completos."""
+
+    def test_all_personalities_have_tokens(self):
+        from design_system.visual_policy import VisualPersonality
+        from engines.design_tokens_engine import DesignTokensEngine
+
+        for personality in [
+            VisualPersonality.PREMIUM_CLINICAL,
+            VisualPersonality.PERFORMANCE_RESULT,
+            VisualPersonality.BOLD_URBAN,
+        ]:
+            tokens, policy = DesignTokensEngine().generate(personality)
+            assert tokens.colors[ColorRole.BG] is not None
+            assert tokens.colors[ColorRole.ACCENT] is not None
+            assert tokens.personality == personality.value
+            assert policy.personality == personality
+
+    def test_performance_result_colors(self):
+        from design_system.visual_policy import VisualPersonality
+        from engines.design_tokens_engine import DesignTokensEngine
+
+        tokens, _ = DesignTokensEngine().generate(VisualPersonality.PERFORMANCE_RESULT)
+        assert tokens.colors[ColorRole.BG] == "#FFFFFF"
+        assert tokens.colors[ColorRole.ACCENT] == "#E63946"
+        assert tokens.colors[ColorRole.ON_ACCENT] == "#FFFFFF"
+        assert tokens.typography.heading.family == "Montserrat"
+        assert tokens.typography.body.family == "Inter"
+
+    def test_bold_urban_colors(self):
+        from design_system.visual_policy import VisualPersonality
+        from engines.design_tokens_engine import DesignTokensEngine
+
+        tokens, _ = DesignTokensEngine().generate(VisualPersonality.BOLD_URBAN)
+        assert tokens.colors[ColorRole.BG] == "#1A1A1A"
+        assert tokens.colors[ColorRole.ACCENT] == "#D4AF37"
+        assert tokens.colors[ColorRole.ON_ACCENT] == "#1A1A1A"
+        assert tokens.typography.heading.family == "Oswald"
+        assert tokens.typography.body.family == "Inter"
+
+    def test_new_personalities_css_variables_include_all_roles(self):
+        from design_system.visual_policy import VisualPersonality
+        from engines.design_tokens_engine import DesignTokensEngine
+
+        for personality in [
+            VisualPersonality.PERFORMANCE_RESULT,
+            VisualPersonality.BOLD_URBAN,
+        ]:
+            tokens, _ = DesignTokensEngine().generate(personality)
+            css = tokens.get_css_variables()
+            for role in ("--color-bg", "--color-accent", "--color-on-accent", "--font-heading"):
+                assert role in css, (personality, role)

@@ -17,6 +17,8 @@ from pydantic import BaseModel, Field
 class VisualPersonality(str, Enum):
     """Personalidade visual derivada de (nicho + posicionamento)."""
     PREMIUM_CLINICAL = "premium_clinical"
+    PERFORMANCE_RESULT = "performance_result"
+    BOLD_URBAN = "bold_urban"
 
 
 class Archetype(str, Enum):
@@ -25,8 +27,14 @@ class Archetype(str, Enum):
     # premium / estetica
     PRESTIGIO_CLINICO = "prestigio_clinico"
 
+    # performance / academia
+    FORCA_DISCIPLINA = "forca_disciplina"
+
+    # modern / barbearia
+    ESTILO_URBANO = "estilo_urbano"
+
     # -- posições declaradas mas fora do slice VS-0 (reserva de catálogo) --
-    # performance, mainstream, price, innovation, expert, heritage, community, natural
+    # mainstream, price, innovation, expert, heritage, community, natural
 
 
 class LocationPolicy(BaseModel):
@@ -99,6 +107,72 @@ CATALOG: dict[VisualPersonality, VisualPolicy] = {
         forbidden=[
             "Hex fora do bloco de tokens (gate de hex limpo).",
             "Tons neon, gradientes chamativos ou paleta infantil.",
+        ],
+        rules=[
+            "Personalidade é determinada por engine, nunca por LLM.",
+            "O LLM escreve somente a copy; design vem dos tokens.",
+        ],
+    ),
+    VisualPersonality.PERFORMANCE_RESULT: VisualPolicy(
+        personality=VisualPersonality.PERFORMANCE_RESULT,
+        archetype=Archetype.FORCA_DISCIPLINA,
+        position="performance",
+        hero_image=(
+            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48"
+            "?q=80&w=1600&auto=format&fit=crop"
+        ),
+        location_policy=LocationPolicy(),
+        tone_guidelines=[
+            "Tom direto, energético e orientado a resultado.",
+            "Foco em evolução, disciplina e superação.",
+            "Vocabulário: 'resultado', 'transformação', 'disciplina', 'superação'.",
+            "Evitar promessas médicas ou tom clínico.",
+        ],
+        typography_heading="Montserrat",
+        typography_body="Inter",
+        color_palette={
+            "bg": "#FFFFFF",
+            "surface": "#F8F9FA",
+            "text": "#1A1A1A",
+            "accent": "#E63946",
+            "on_accent": "#FFFFFF",
+        },
+        forbidden=[
+            "Hex fora do bloco de tokens (gate de hex limpo).",
+            "Paleta pastel, decoração delicada ou tom corporativo.",
+        ],
+        rules=[
+            "Personalidade é determinada por engine, nunca por LLM.",
+            "O LLM escreve somente a copy; design vem dos tokens.",
+        ],
+    ),
+    VisualPersonality.BOLD_URBAN: VisualPolicy(
+        personality=VisualPersonality.BOLD_URBAN,
+        archetype=Archetype.ESTILO_URBANO,
+        position="modern",
+        hero_image=(
+            "https://images.unsplash.com/photo-1503951914875-452162b0f3f1"
+            "?q=80&w=1600&auto=format&fit=crop"
+        ),
+        location_policy=LocationPolicy(),
+        tone_guidelines=[
+            "Tom confiante, descontraído e de identidade forte.",
+            "Foco em estilo, tradição e presença.",
+            "Vocabulário: 'estilo', 'corte', 'identidade', 'tradição'.",
+            "Evitar tom corporativo ou genérico.",
+        ],
+        typography_heading="Oswald",
+        typography_body="Inter",
+        color_palette={
+            "bg": "#1A1A1A",
+            "surface": "#2A2A2A",
+            "text": "#FFFFFF",
+            "accent": "#D4AF37",
+            "on_accent": "#1A1A1A",
+        },
+        forbidden=[
+            "Hex fora do bloco de tokens (gate de hex limpo).",
+            "Tons claros e clean — o tema é escuro por definição.",
         ],
         rules=[
             "Personalidade é determinada por engine, nunca por LLM.",

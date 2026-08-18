@@ -52,3 +52,37 @@ class TestVs0FixedMapping:
         a = engine.determine("estetica", evidence={"rating": 4.8, "total_ratings": 327})
         b = engine.determine("estetica", evidence={})
         assert a.market_position == b.market_position == MarketPosition.PREMIUM
+
+    def test_positioning_map_contains_all_niches(self, engine):
+        """Todos os nichos do Generalization Slice têm mapeamento fixo."""
+        for niche in ["estetica", "academia", "barbearia"]:
+            pos = engine.determine(niche, {})
+            assert pos.market_position != MarketPosition.UNDETERMINED, niche
+
+    def test_academia_maps_to_performance(self, engine):
+        decision = engine.determine("academia")
+        assert decision.market_position == MarketPosition.PERFORMANCE
+        assert not decision.is_undetermined
+        assert decision.evidence_strength == 0.80
+        assert decision.tone == "direto"
+        assert decision.value_proposition == "Transforme seu corpo com treinos de alta performance"
+        assert decision.target_audience == "jovens e adultos 18-50 anos, todos os níveis"
+        assert "vs0_fixed_mapping" in decision.decision_reasons
+
+    def test_barbearia_maps_to_modern(self, engine):
+        decision = engine.determine("barbearia")
+        assert decision.market_position == MarketPosition.MODERN
+        assert not decision.is_undetermined
+        assert decision.evidence_strength == 0.75
+        assert decision.tone == "confiável"
+        assert decision.value_proposition == "Estilo e tradição em cada corte"
+        assert decision.target_audience == "homens 18-60 anos"
+
+    def test_new_niches_are_case_insensitive(self, engine):
+        assert engine.determine("ACADEMIA").market_position == MarketPosition.PERFORMANCE
+        assert engine.determine("  Barbearia ").market_position == MarketPosition.MODERN
+
+    def test_unknown_niche_reason_marker(self, engine):
+        decision = engine.determine("restaurante")
+        assert decision.market_position == MarketPosition.UNDETERMINED
+        assert "nichos_fora_do_escopo_vs0" in decision.decision_reasons

@@ -56,3 +56,31 @@ def test_vs0_engine_error_contracts():
     with pytest.raises(Exception) as exc:
         DesignTokensEngine().generate("nao_existe")
     assert "DESIGN_TOKENS_UNRESOLVED" in str(exc.value)
+
+
+@pytest.mark.parametrize(
+    "niche,position_name,bg,accent,personality_name",
+    [
+        ("estetica", "PREMIUM", "#F5F3F0", "#C6A87C", "PREMIUM_CLINICAL"),
+        ("academia", "PERFORMANCE", "#FFFFFF", "#E63946", "PERFORMANCE_RESULT"),
+        ("barbearia", "MODERN", "#1A1A1A", "#D4AF37", "BOLD_URBAN"),
+    ],
+)
+def test_vs0_generalization_flow(niche, position_name, bg, accent, personality_name):
+    """Generalization Slice: a mesma cadeia determinística serve os 3 nichos."""
+    position = MarketPosition[position_name]
+    personality = getattr(VisualPersonality, personality_name)
+
+    pos = PositioningEngine().determine(niche)
+    assert pos.market_position == position
+
+    resolved = VisualThemeResolver().resolve(niche, pos.market_position)
+    assert resolved == personality
+
+    tokens, policy = DesignTokensEngine().generate(resolved)
+    assert tokens.colors[ColorRole.BG] == bg
+    assert tokens.colors[ColorRole.ACCENT] == accent
+    assert policy.personality == personality
+
+    passed, issues = DesignTokenGate().validate(tokens, policy)
+    assert passed, issues

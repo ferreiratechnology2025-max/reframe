@@ -54,9 +54,9 @@
         url('{{ data.hero_image_url }}');
       background-size: cover;
       background-position: center;
-      color: var(--color-surface);
+      color: var(--color-on-overlay, var(--color-surface));
     }
-    .hero h1 { color: var(--color-surface); }
+    .hero h1 { color: var(--color-on-overlay, var(--color-surface)); }
     .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.08em;

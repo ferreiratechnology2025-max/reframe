@@ -32,6 +32,7 @@ class ColorRole(str, Enum):
     ACCENT = "accent"
     ACCENT_HOVER = "accent_hover"
     ON_ACCENT = "on_accent"
+    ON_OVERLAY = "on_overlay"
 
     @property
     def css_name(self) -> str:
