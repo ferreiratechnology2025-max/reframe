@@ -45,3 +45,38 @@ class TestDeterminism:
             tokens, policy = DesignTokensEngine().generate(personality)
             passed, issues = DesignTokenGate().validate(tokens, policy)
             assert passed, f"Falha para {personality}: {issues}"
+
+
+class TestPositioningDeterminism:
+    """VS-1: determinismo do EvidencePositioningEngine sob evidência variável."""
+
+    def test_same_evidence_same_decision(self):
+        """Mesma evidência → mesma posição, decision_reasons e strength."""
+        from design_system.evidence_positioning import EvidencePositioningEngine
+
+        engine = EvidencePositioningEngine()
+        evidence = {"rating": 4.8, "total_ratings": 327, "specialties": ["injetáveis"]}
+        results = []
+        for _ in range(5):
+            pos = engine.determine("estetica", evidence)
+            results.append((pos.market_position, pos.decision_reasons, pos.evidence_strength))
+
+        for i in range(1, len(results)):
+            assert results[0] == results[i]
+
+    def test_different_evidence_deterministic_per_case(self):
+        """Evidências diferentes → decisões diferentes, mas cada uma estável."""
+        from design_system.evidence_positioning import EvidencePositioningEngine
+
+        engine = EvidencePositioningEngine()
+        cases = [
+            {"rating": 4.8, "total_ratings": 327, "specialties": ["facial"]},
+            {"rating": 4.8, "total_ratings": 327, "specialties": ["injetáveis"]},
+            {"rating": 2.9, "total_ratings": 100, "specialties": []},
+            {},
+        ]
+
+        for evidence in cases:
+            run_a = engine.determine("estetica", evidence)
+            run_b = engine.determine("estetica", evidence)
+            assert run_a.model_dump() == run_b.model_dump()

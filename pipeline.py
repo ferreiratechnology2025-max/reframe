@@ -13,9 +13,9 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
 from design_system.design_tokens import DesignTokens
+from design_system.evidence_positioning import EvidencePositioningEngine
 from design_system.location import BusinessLocation
 from design_system.visual_policy import VisualPolicy
-from engines.positioning_engine import PositioningEngine
 from engines.theme_resolver import VisualThemeResolver
 from engines.design_tokens_engine import DesignTokensEngine
 from models import CommercialEvidence, EvidenceSource
@@ -35,7 +35,12 @@ class DemoInput:
 
 def _evidence_to_commercial(evidence: Optional[Dict[str, Any]]) -> CommercialEvidence:
     """Converte dict de evidência (rating/avaliações/especialidades) no
-    contrato CommercialEvidence usado pelo pipeline."""
+    contrato CommercialEvidence usado pelo pipeline.
+
+    VS-1: rating/total_ratings/specialties ficam ESTRUTURADOS (fonte de
+    decisão). As strings de copy são derivadas (contexto para o LLM), nunca
+    fonte de decisão.
+    """
     evidence = evidence or {}
     specialties = list(evidence.get("specialties") or [])
     services = [f"Especialidade: {s}" for s in specialties]
@@ -47,18 +52,24 @@ def _evidence_to_commercial(evidence: Optional[Dict[str, Any]]) -> CommercialEvi
 
     return CommercialEvidence(
         services=services,
+        rating=rating,
+        total_ratings=total,
+        specialties=specialties,
         sources={
             "services": EvidenceSource(type="google_places", confidence=0.9, verified=True),
+            "rating": EvidenceSource(type="google_places", confidence=0.9, verified=True),
+            "total_ratings": EvidenceSource(type="google_places", confidence=0.9, verified=True),
+            "specialties": EvidenceSource(type="google_places", confidence=0.9, verified=True),
         },
     )
 
 
 def generate_tokens(demo: DemoInput) -> tuple[DesignTokens, VisualPolicy]:
     """Deriva (tokens, policy) da entrada — 100% determinístico, sem LLM."""
-    positioning = PositioningEngine().determine(demo.niche)
+    positioning = EvidencePositioningEngine().determine(demo.niche, demo.evidence)
     if positioning.is_undetermined:
         raise ValueError(
-            f"POSITIONING_UNDETERMINED: nicho '{demo.niche}' fora do escopo VS-0"
+            f"POSITIONING_UNDETERMINED: nicho '{demo.niche}' fora do escopo VS-1"
         )
     personality = VisualThemeResolver().resolve(demo.niche, positioning.market_position)
     return DesignTokensEngine().generate(personality)

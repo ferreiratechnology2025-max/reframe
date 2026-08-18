@@ -16,8 +16,8 @@ from validate_evidence_integrity import EvidenceIntegrityValidator
 
 # ─── Design System Engine (VS-0) ─────────────────────────────────────
 from design_system.design_tokens import ColorRole, DesignTokens, FontSpec, SemanticColor, TypographyPolicy
+from design_system.evidence_positioning import EvidencePositioningEngine
 from design_system.location import BusinessLocation
-from engines.positioning_engine import PositioningEngine
 from engines.theme_resolver import VisualThemeResolver, ThemeResolutionError
 from engines.design_tokens_engine import DesignTokensEngine
 from gates.design_token_gate import DesignTokenGate
@@ -332,8 +332,14 @@ async def generate_landing(
         trusted_business["location"] = location
 
     # ── 1. POSITIONING (determinístico — nunca LLM) ──────────────────
-    positioning = PositioningEngine().determine(
-        niche=niche, evidence=trusted_business["evidence"], location=location
+    commercial = trusted_business["evidence"]
+    positioning = EvidencePositioningEngine().determine(
+        niche=niche,
+        evidence={
+            "rating": commercial.rating,
+            "total_ratings": commercial.total_ratings,
+            "specialties": commercial.specialties,
+        },
     )
     if positioning.is_undetermined:
         return {

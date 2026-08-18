@@ -133,7 +133,10 @@ NICHES_EXPECTED = [
             city="Goiânia",
             whatsapp="+5562999999999",
             place_id="demo-barbearia",
-            evidence={"rating": 4.9, "total_ratings": 891, "specialties": ["corte clássico", "barba"]},
+            # VS-1: "barba"/"corte premium" → LUXURY (sem personalidade → bloqueio).
+            # Para publicar MODERN, evidência de especialidade fica vazia e o
+            # rating/volume resolve MODERN (rating ≥4.5 E volume ≥100).
+            evidence={"rating": 4.9, "total_ratings": 891, "specialties": []},
             location={
                 "address_line": "Rua 3, 120 — Setor Central",
                 "neighborhood": "Setor Central",
@@ -194,6 +197,26 @@ async def test_vs0_e2e_undetermined_niche_fails_without_publishing():
     result = await generate_demo(demo)
     assert result["status"] == "failed"
     assert result["error"] == "POSITIONING_UNDETERMINED"
+
+
+@pytest.mark.asyncio
+async def test_vs0_e2e_luxury_barbearia_blocks_without_publishing():
+    """VS-1: barbearia + 'barba' → LUXURY → THEME_UNRESOLVED → bloqueio.
+
+    Não publica (posição sem personalidade no catálogo visual fechado VS-0).
+    Falha ANTES do LLM/R2 — não depende de credenciais.
+    """
+    demo = DemoInput(
+        business_name="Barbearia Central",
+        niche="barbearia",
+        city="Goiânia",
+        whatsapp="+5562999999999",
+        place_id="demo-barbearia-luxury",
+        evidence={"rating": 4.9, "total_ratings": 891, "specialties": ["corte clássico", "barba"]},
+    )
+    result = await generate_demo(demo)
+    assert result["status"] == "failed"
+    assert result["error"] == "THEME_UNRESOLVED"
 
 
 def test_generate_tokens_is_deterministic():

@@ -26,6 +26,8 @@ class MarketPosition(str, Enum):
     COMMUNITY = "COMMUNITY"
     NATURAL = "NATURAL"
     MODERN = "MODERN"
+    LUXURY = "LUXURY"  # VS-1 (barbearia)
+    TRADITIONAL = "TRADITIONAL"  # VS-1 (barbearia)
     UNDETERMINED = "UNDETERMINED"
 
 

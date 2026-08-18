@@ -81,6 +81,21 @@ class CommercialEvidence(BaseModel):
         default_factory=dict,
         description="Fonte/confiança de cada campo de evidência, por nome do campo"
     )
+    rating: Optional[float] = Field(
+        default=None,
+        ge=0,
+        le=5,
+        description="Nota média (ex: Google Places), 0-5. Fonte de decisão VS-1."
+    )
+    total_ratings: Optional[int] = Field(
+        default=None,
+        ge=0,
+        description="Volume de avaliações. Fonte de decisão VS-1."
+    )
+    specialties: List[str] = Field(
+        default_factory=list,
+        description="Especialidades do negócio (scoped por nicho). Fonte de decisão VS-1."
+    )
 
     @property
     def has_evidence(self) -> bool:
