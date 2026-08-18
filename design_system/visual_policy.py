@@ -1,12 +1,13 @@
 """
-VisualPolicy — política visual por personalidade (VS-0).
+VisualPolicy — política visual por template (VS-2).
 
-Mapeia (nicho, posicionamento) -> personalidade visual -> arquétipo.
-Determinístico. Catálogo fechado: VS-0 contém apenas PREMIUM_CLINICAL.
+VS-2: a política vive dentro do VisualTemplate (design_system.visual_template),
+selecionado por posição de mercado via POSITION_TEMPLATE_MAP. Não há mais
+enum de personalidade visual nem CATALOG — o catálogo fechado é TEMPLATES.
 
 Contratos de contraste seguem WCAG AA (nunca AAA): texto 4.5:1,
 elementos de UI (accent) 3.0:1. AAA é exigência de conformidade
-adicional, fora do escopo do VS-0.
+adicional, fora do escopo.
 """
 from enum import Enum
 from typing import List
@@ -14,31 +15,33 @@ from typing import List
 from pydantic import BaseModel, Field
 
 
-class VisualPersonality(str, Enum):
-    """Personalidade visual derivada de (nicho + posicionamento)."""
-    PREMIUM_CLINICAL = "premium_clinical"
-    PERFORMANCE_RESULT = "performance_result"
-    BOLD_URBAN = "bold_urban"
-
-
 class Archetype(str, Enum):
-    """Arquétipo visual — em VS-0, 1:1 com a personalidade."""
+    """Arquétipo visual do template (1:1 com o template)."""
 
-    # premium / estetica
+    # premium
     PRESTIGIO_CLINICO = "prestigio_clinico"
 
-    # performance / academia
+    # performance
     FORCA_DISCIPLINA = "forca_disciplina"
 
-    # modern / barbearia
+    # modern
     ESTILO_URBANO = "estilo_urbano"
 
-    # -- posições declaradas mas fora do slice VS-0 (reserva de catálogo) --
-    # mainstream, price, innovation, expert, heritage, community, natural
+    # natural
+    BELEZA_NATURAL = "beleza_natural"
+
+    # luxury
+    LUXO_SOBRIO = "luxo_sobrio"
+
+    # modern (tech)
+    TECNOLOGIA_MODERNA = "tecnologia_moderna"
+
+    # traditional
+    TRADICAO_ACOLHEDORA = "tradicao_acolhedora"
 
 
 class LocationPolicy(BaseModel):
-    """Política de localização da personalidade.
+    """Política de localização do template.
 
     is_required é MÉTODO (não property) — recebe o nicho e decide.
     """
@@ -54,14 +57,14 @@ class LocationPolicy(BaseModel):
 
 
 class VisualPolicy(BaseModel):
-    """Política visual de uma personalidade: tokens, tom, restrições.
+    """Política visual de um template: tom, restrições e contratos.
 
     Contraste — WCAG AA (não AAA):
       minimum_text_contrast: 4.5  (texto normal)
       minimum_large_text_contrast: 3.0
       minimum_accent_contrast: 3.0  (elementos de UI / CTA)
     """
-    personality: VisualPersonality
+    personality: str
     archetype: Archetype
     position: str
     hero_image: str = ""
@@ -77,106 +80,3 @@ class VisualPolicy(BaseModel):
     minimum_text_contrast: float = 4.5
     minimum_large_text_contrast: float = 3.0
     minimum_accent_contrast: float = 3.0
-
-
-CATALOG: dict[VisualPersonality, VisualPolicy] = {
-    VisualPersonality.PREMIUM_CLINICAL: VisualPolicy(
-        personality=VisualPersonality.PREMIUM_CLINICAL,
-        archetype=Archetype.PRESTIGIO_CLINICO,
-        position="premium",
-        hero_image=(
-            "https://images.unsplash.com/photo-1556228578-8c89e6adf883"
-            "?q=80&w=1600&auto=format&fit=crop"
-        ),
-        location_policy=LocationPolicy(required_for_niches=["estetica"]),
-        tone_guidelines=[
-            "Tom sóbrio, confiante e empático.",
-            "Foco em resultado, segurança e expertise clínica.",
-            "Vocabulário: 'cuidado', 'protocolo', 'resultado', 'segurança'.",
-            "Evitar promessas absolutas e jargão de venda.",
-        ],
-        typography_heading="Playfair Display",
-        typography_body="Inter",
-        color_palette={
-            "bg": "#F5F3F0",
-            "surface": "#FFFFFF",
-            "text": "#1A1A1A",
-            "accent": "#C6A87C",
-            "on_accent": "#1A1A1A",
-        },
-        forbidden=[
-            "Hex fora do bloco de tokens (gate de hex limpo).",
-            "Tons neon, gradientes chamativos ou paleta infantil.",
-        ],
-        rules=[
-            "Personalidade é determinada por engine, nunca por LLM.",
-            "O LLM escreve somente a copy; design vem dos tokens.",
-        ],
-    ),
-    VisualPersonality.PERFORMANCE_RESULT: VisualPolicy(
-        personality=VisualPersonality.PERFORMANCE_RESULT,
-        archetype=Archetype.FORCA_DISCIPLINA,
-        position="performance",
-        hero_image=(
-            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48"
-            "?q=80&w=1600&auto=format&fit=crop"
-        ),
-        location_policy=LocationPolicy(),
-        tone_guidelines=[
-            "Tom direto, energético e orientado a resultado.",
-            "Foco em evolução, disciplina e superação.",
-            "Vocabulário: 'resultado', 'transformação', 'disciplina', 'superação'.",
-            "Evitar promessas médicas ou tom clínico.",
-        ],
-        typography_heading="Montserrat",
-        typography_body="Inter",
-        color_palette={
-            "bg": "#FFFFFF",
-            "surface": "#F8F9FA",
-            "text": "#1A1A1A",
-            "accent": "#E63946",
-            "on_accent": "#FFFFFF",
-        },
-        forbidden=[
-            "Hex fora do bloco de tokens (gate de hex limpo).",
-            "Paleta pastel, decoração delicada ou tom corporativo.",
-        ],
-        rules=[
-            "Personalidade é determinada por engine, nunca por LLM.",
-            "O LLM escreve somente a copy; design vem dos tokens.",
-        ],
-    ),
-    VisualPersonality.BOLD_URBAN: VisualPolicy(
-        personality=VisualPersonality.BOLD_URBAN,
-        archetype=Archetype.ESTILO_URBANO,
-        position="modern",
-        hero_image=(
-            "https://images.unsplash.com/photo-1503951914875-452162b0f3f1"
-            "?q=80&w=1600&auto=format&fit=crop"
-        ),
-        location_policy=LocationPolicy(),
-        tone_guidelines=[
-            "Tom confiante, descontraído e de identidade forte.",
-            "Foco em estilo, tradição e presença.",
-            "Vocabulário: 'estilo', 'corte', 'identidade', 'tradição'.",
-            "Evitar tom corporativo ou genérico.",
-        ],
-        typography_heading="Oswald",
-        typography_body="Inter",
-        color_palette={
-            "bg": "#1A1A1A",
-            "surface": "#2A2A2A",
-            "text": "#FFFFFF",
-            "accent": "#D4AF37",
-            "on_accent": "#1A1A1A",
-        },
-        forbidden=[
-            "Hex fora do bloco de tokens (gate de hex limpo).",
-            "Tons claros e clean — o tema é escuro por definição.",
-        ],
-        rules=[
-            "Personalidade é determinada por engine, nunca por LLM.",
-            "O LLM escreve somente a copy; design vem dos tokens.",
-        ],
-    ),
-}

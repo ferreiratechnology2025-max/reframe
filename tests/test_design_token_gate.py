@@ -8,14 +8,14 @@ Contrato de saída: (passed, issues).
 import pytest
 
 from design_system.design_tokens import ColorRole, DesignTokens, FontSpec, SemanticColor, TypographyPolicy
-from design_system.visual_policy import CATALOG, VisualPersonality
+from design_system.visual_template import TEMPLATES
 from gates.contrast import contrast_ratio
 from gates.design_token_gate import DesignTokenGate
 
 
 def make_tokens(**overrides) -> DesignTokens:
     data = {
-        "personality": VisualPersonality.PREMIUM_CLINICAL.value,
+        "personality": "PREMIUM_CLINICAL",
         "colors": {
             ColorRole.BG: "#F5F3F0",
             ColorRole.SURFACE: "#FFFFFF",
@@ -54,7 +54,7 @@ def tokens() -> DesignTokens:
 
 @pytest.fixture
 def policy():
-    return CATALOG[VisualPersonality.PREMIUM_CLINICAL]
+    return TEMPLATES["PREMIUM_CLINICAL"].policy
 
 
 class TestContrastUtility:

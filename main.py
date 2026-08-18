@@ -349,14 +349,14 @@ async def generate_landing(
             "segment": positioning.segment,
         }
 
-    # ── 2. THEME RESOLVER (sem fallback silencioso) ──────────────────
+    # ── 2. THEME RESOLVER (position-only, sem fallback silencioso) ─────
     try:
-        personality = VisualThemeResolver().resolve(niche, positioning.market_position)
+        visual_template = VisualThemeResolver().resolve(niche, positioning.market_position)
     except ThemeResolutionError as e:
         return {"status": "failed", "error": "THEME_UNRESOLVED", "detail": str(e)}
 
     # ── 3. DESIGN TOKENS + POLICY (determinísticos) ──────────────────
-    tokens, policy = DesignTokensEngine().generate(personality)
+    tokens, policy = DesignTokensEngine().generate(visual_template)
 
     # ── 4. DESIGN TOKEN GATE (ANTES do LLM) ──────────────────────────
     passed, issues = DesignTokenGate().validate(tokens, policy)
@@ -365,7 +365,7 @@ async def generate_landing(
             "status": "failed",
             "error": "DESIGN_TOKEN_GATE_FAILED",
             "issues": issues,
-            "personality": personality.value,
+            "personality": visual_template.id,
         }
 
     if on_progress:
@@ -412,7 +412,7 @@ async def generate_landing(
             "status": "failed",
             "error": "RENDERED_VISUAL_GATE_FAILED",
             "issues": issues,
-            "personality": personality.value,
+            "personality": visual_template.id,
         }
 
     if on_progress:
@@ -425,7 +425,7 @@ async def generate_landing(
     return {
         "status": "published",
         "url": final_url,
-        "personality": personality.value,
+        "personality": visual_template.id,
         "archetype_name": policy.archetype.value,
         "position": positioning.market_position.value,
         "primary_color": tokens.colors[ColorRole.ACCENT],

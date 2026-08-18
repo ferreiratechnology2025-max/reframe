@@ -4,7 +4,7 @@ Testes de determinismo do Design System Engine (VS-0.2).
 Os tokens são gerados ANTES do LLM e independentes de copy, provider ou
 temperatura: a mesma personalidade produz SEMPRE os mesmos tokens.
 """
-from design_system.visual_policy import VisualPersonality
+from design_system.visual_template import TEMPLATES
 from engines.design_tokens_engine import DesignTokensEngine
 from gates.design_token_gate import DesignTokenGate
 
@@ -13,11 +13,11 @@ class TestDeterminism:
     """Testa que DesignTokens são determinísticos."""
 
     def test_tokens_unchanged_across_runs(self):
-        """Determinismo: mesma personality → mesmos tokens em execuções diferentes."""
-        personality = VisualPersonality.PREMIUM_CLINICAL
+        """Determinismo: mesmo template → mesmos tokens em execuções diferentes."""
+        template = TEMPLATES["PREMIUM_CLINICAL"]
         results = []
         for _ in range(5):
-            tokens, policy = DesignTokensEngine().generate(personality)
+            tokens, policy = DesignTokensEngine().generate(template)
             results.append((tokens, policy))
 
         for i in range(1, len(results)):
@@ -26,25 +26,19 @@ class TestDeterminism:
 
     def test_tokens_unchanged_by_llm_variation(self):
         """LLM não afeta tokens (tokens são gerados ANTES do LLM)."""
-        personality = VisualPersonality.PERFORMANCE_RESULT
-        tokens1, policy1 = DesignTokensEngine().generate(personality)
-        tokens2, policy2 = DesignTokensEngine().generate(personality)
+        template = TEMPLATES["PERFORMANCE_RESULT"]
+        tokens1, policy1 = DesignTokensEngine().generate(template)
+        tokens2, policy2 = DesignTokensEngine().generate(template)
 
         assert tokens1 == tokens2
         assert policy1 == policy2
 
     def test_all_personalities_have_valid_tokens(self):
-        """Todas as personalidades VS-0 têm tokens válidos e passam no gate."""
-        personalities = [
-            VisualPersonality.PREMIUM_CLINICAL,
-            VisualPersonality.PERFORMANCE_RESULT,
-            VisualPersonality.BOLD_URBAN,
-        ]
-
-        for personality in personalities:
-            tokens, policy = DesignTokensEngine().generate(personality)
+        """Todos os templates VS-2 têm tokens válidos e passam no gate."""
+        for template in TEMPLATES.values():
+            tokens, policy = DesignTokensEngine().generate(template)
             passed, issues = DesignTokenGate().validate(tokens, policy)
-            assert passed, f"Falha para {personality}: {issues}"
+            assert passed, f"Falha para {template.id}: {issues}"
 
 
 class TestPositioningDeterminism:

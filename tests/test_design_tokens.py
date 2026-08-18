@@ -130,28 +130,24 @@ class TestCssVariables:
 
 
 class TestGeneralizationTokens:
-    """Generalization Slice — todas as personalidades têm tokens completos."""
+    """VS-2 — todos os templates do catálogo têm tokens completos."""
 
     def test_all_personalities_have_tokens(self):
-        from design_system.visual_policy import VisualPersonality
+        from design_system.visual_template import TEMPLATES
         from engines.design_tokens_engine import DesignTokensEngine
 
-        for personality in [
-            VisualPersonality.PREMIUM_CLINICAL,
-            VisualPersonality.PERFORMANCE_RESULT,
-            VisualPersonality.BOLD_URBAN,
-        ]:
-            tokens, policy = DesignTokensEngine().generate(personality)
+        for template in TEMPLATES.values():
+            tokens, policy = DesignTokensEngine().generate(template)
             assert tokens.colors[ColorRole.BG] is not None
             assert tokens.colors[ColorRole.ACCENT] is not None
-            assert tokens.personality == personality.value
-            assert policy.personality == personality
+            assert tokens.personality == template.id
+            assert policy.personality == template.id
 
     def test_performance_result_colors(self):
-        from design_system.visual_policy import VisualPersonality
+        from design_system.visual_template import TEMPLATES
         from engines.design_tokens_engine import DesignTokensEngine
 
-        tokens, _ = DesignTokensEngine().generate(VisualPersonality.PERFORMANCE_RESULT)
+        tokens, _ = DesignTokensEngine().generate(TEMPLATES["PERFORMANCE_RESULT"])
         assert tokens.colors[ColorRole.BG] == "#FFFFFF"
         assert tokens.colors[ColorRole.ACCENT] == "#E63946"
         assert tokens.colors[ColorRole.ON_ACCENT] == "#FFFFFF"
@@ -159,10 +155,10 @@ class TestGeneralizationTokens:
         assert tokens.typography.body.family == "Inter"
 
     def test_bold_urban_colors(self):
-        from design_system.visual_policy import VisualPersonality
+        from design_system.visual_template import TEMPLATES
         from engines.design_tokens_engine import DesignTokensEngine
 
-        tokens, _ = DesignTokensEngine().generate(VisualPersonality.BOLD_URBAN)
+        tokens, _ = DesignTokensEngine().generate(TEMPLATES["BOLD_URBAN"])
         assert tokens.colors[ColorRole.BG] == "#1A1A1A"
         assert tokens.colors[ColorRole.ACCENT] == "#D4AF37"
         assert tokens.colors[ColorRole.ON_ACCENT] == "#1A1A1A"
@@ -170,14 +166,18 @@ class TestGeneralizationTokens:
         assert tokens.typography.body.family == "Inter"
 
     def test_new_personalities_css_variables_include_all_roles(self):
-        from design_system.visual_policy import VisualPersonality
+        from design_system.visual_template import TEMPLATES
         from engines.design_tokens_engine import DesignTokensEngine
 
-        for personality in [
-            VisualPersonality.PERFORMANCE_RESULT,
-            VisualPersonality.BOLD_URBAN,
+        for template_id in [
+            "PERFORMANCE_RESULT",
+            "BOLD_URBAN",
+            "NATURAL_ELEGANT",
+            "LUXURY_MINIMAL",
+            "MODERN_TECH",
+            "ORGANIC_WARM",
         ]:
-            tokens, _ = DesignTokensEngine().generate(personality)
+            tokens, _ = DesignTokensEngine().generate(TEMPLATES[template_id])
             css = tokens.get_css_variables()
             for role in ("--color-bg", "--color-accent", "--color-on-accent", "--font-heading"):
-                assert role in css, (personality, role)
+                assert role in css, (template_id, role)

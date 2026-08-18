@@ -16,7 +16,7 @@ from design_system.evidence_positioning import (
     SUPPORTED_POSITIONS,
 )
 from design_system.positioning import MarketPosition
-from engines.theme_resolver import ThemeResolutionError, VisualThemeResolver
+from engines.theme_resolver import VisualThemeResolver
 
 
 @pytest.fixture
@@ -272,9 +272,9 @@ class TestCommercialProfiles:
         assert pos.target_audience == "jovens e adultos 18-45 anos"
 
 
-class TestThemeUnresolvedBlocking:
-    def test_luxury_barbearia_blocks_due_to_theme_unresolved(self):
-        """Barbearia + 'barba' → LUXURY → sem personalidade → bloqueio."""
+class TestThemeResolutionVs2:
+    def test_luxury_barbearia_resolves_to_luxury_minimal(self):
+        """Barbearia + 'barba' → LUXURY → LUXURY_MINIMAL (VS-2)."""
         pos = EvidencePositioningEngine().determine("barbearia", {
             "specialties": ["barba"],
             "rating": 4.8,
@@ -282,18 +282,28 @@ class TestThemeUnresolvedBlocking:
         })
         assert pos.market_position == MarketPosition.LUXURY
 
-        with pytest.raises(ThemeResolutionError) as exc:
-            VisualThemeResolver().resolve("barbearia", pos.market_position)
-        assert str(exc.value).startswith("THEME_UNRESOLVED:")
+        template = VisualThemeResolver().resolve("barbearia", pos.market_position)
+        assert template.id == "LUXURY_MINIMAL"
 
-    def test_traditional_barbearia_blocks_due_to_theme_unresolved(self):
+    def test_traditional_barbearia_resolves_to_organic_warm(self):
         pos = EvidencePositioningEngine().determine("barbearia", {
             "specialties": ["corte tradicional"],
         })
         assert pos.market_position == MarketPosition.TRADITIONAL
 
-        with pytest.raises(ThemeResolutionError):
-            VisualThemeResolver().resolve("barbearia", pos.market_position)
+        template = VisualThemeResolver().resolve("barbearia", pos.market_position)
+        assert template.id == "ORGANIC_WARM"
+
+    def test_same_position_resolves_to_same_template_across_niches(self):
+        """VS-2: posição igual → template igual, independente do nicho."""
+        estetica = EvidencePositioningEngine().determine("estetica", {"specialties": ["facial"]})
+        academia = EvidencePositioningEngine().determine("academia", {"specialties": ["pilates"]})
+        assert estetica.market_position == MarketPosition.NATURAL
+        assert academia.market_position == MarketPosition.NATURAL
+
+        t_estetica = VisualThemeResolver().resolve("estetica", estetica.market_position)
+        t_academia = VisualThemeResolver().resolve("academia", academia.market_position)
+        assert t_estetica.id == t_academia.id == "NATURAL_ELEGANT"
 
 
 class TestDeterminismWithVaryingEvidence:

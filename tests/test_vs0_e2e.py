@@ -1,9 +1,13 @@
 """
-E2E do Vertical Slice VS-0 — pipeline completo REAL.
+E2E do Vertical Slice VS-0/VS-2 — pipeline completo REAL.
 
-Cadeia: Evidence → Positioning (determinístico) → Theme → Tokens →
-DesignTokenGate → LLM Copy → Evidence Integrity Gate → Render →
+Cadeia: Evidence → Positioning (determinístico) → Theme (position-only) →
+Tokens → DesignTokenGate → LLM Copy → Evidence Integrity Gate → Render →
 RenderedVisualGate (Playwright) → Publish (R2 de verdade).
+
+VS-2: a seleção visual é por POSIÇÃO (POSITION_TEMPLATE_MAP), independente
+de nicho. O mesmo template serve qualquer nicho na mesma posição.
+E2E: 5 publicados + 1 bloqueio (UNDETERMINED).
 
 É um teste de integração ponta-a-ponta: usa credenciais reais do .env
 (LLM + R2). Pula com aviso se as credenciais não existirem.
@@ -60,32 +64,87 @@ def _demo_input() -> DemoInput:
     )
 
 
+def _estetica_demo(specialties, name="Clínica Dra. Andrielle Fernandes",
+                   place_id="ChIJN1t_tDeuEmsRUsoyN83rY4Q") -> DemoInput:
+    return DemoInput(
+        business_name=name,
+        niche="estetica",
+        city="Goiânia",
+        whatsapp="+5562999999999",
+        place_id=place_id,
+        evidence={"rating": 4.8, "total_ratings": 327, "specialties": specialties},
+        location={
+            "address_line": "Av. T-63, 1299 — Setor Bueno",
+            "neighborhood": "Setor Bueno",
+            "city": "Goiânia",
+            "state": "GO",
+            "latitude": -16.6869,
+            "longitude": -49.2648,
+            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6869,-49.2648",
+            "source": "google_places",
+            "source_ref": place_id,
+            "status": "verified",
+            "confidence": 0.95,
+        },
+    )
+
+
+def _academia_demo(specialties, name="Academia Performance Prime",
+                   place_id="demo-academia") -> DemoInput:
+    return DemoInput(
+        business_name=name,
+        niche="academia",
+        city="Goiânia",
+        whatsapp="+5562999999999",
+        place_id=place_id,
+        evidence={"rating": 4.7, "total_ratings": 512, "specialties": specialties},
+        location={
+            "address_line": "Av. Anhanguera, 450 — Centro",
+            "neighborhood": "Centro",
+            "city": "Goiânia",
+            "state": "GO",
+            "latitude": -16.6864,
+            "longitude": -49.2643,
+            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6864,-49.2643",
+            "source": "google_places",
+            "source_ref": place_id,
+            "status": "verified",
+            "confidence": 0.9,
+        },
+    )
+
+
+def _barbearia_demo(specialties, name="Barbearia Central",
+                    place_id="demo-barbearia") -> DemoInput:
+    return DemoInput(
+        business_name=name,
+        niche="barbearia",
+        city="Goiânia",
+        whatsapp="+5562999999999",
+        place_id=place_id,
+        evidence={"rating": 4.9, "total_ratings": 891, "specialties": specialties},
+        location={
+            "address_line": "Rua 3, 120 — Setor Central",
+            "neighborhood": "Setor Central",
+            "city": "Goiânia",
+            "state": "GO",
+            "latitude": -16.6799,
+            "longitude": -49.2550,
+            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6799,-49.2550",
+            "source": "google_places",
+            "source_ref": place_id,
+            "status": "verified",
+            "confidence": 0.9,
+        },
+    )
+
+
 NICHES_EXPECTED = [
     (
-        "estetica",
-        DemoInput(
-            business_name="Clínica Dra. Andrielle Fernandes",
-            niche="estetica",
-            city="Goiânia",
-            whatsapp="+5562999999999",
-            place_id="ChIJN1t_tDeuEmsRUsoyN83rY4Q",
-            evidence={"rating": 4.8, "total_ratings": 327, "specialties": ["facial", "injetáveis"]},
-            location={
-                "address_line": "Av. T-63, 1299 — Setor Bueno",
-                "neighborhood": "Setor Bueno",
-                "city": "Goiânia",
-                "state": "GO",
-                "latitude": -16.6869,
-                "longitude": -49.2648,
-                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6869,-49.2648",
-                "source": "google_places",
-                "source_ref": "ChIJN1t_tDeuEmsRUsoyN83rY4Q",
-                "status": "verified",
-                "confidence": 0.95,
-            },
-        ),
+        "estetica_premium",
+        _estetica_demo(["facial", "injetáveis"]),
         {
-            "personality": "premium_clinical",
+            "template_id": "PREMIUM_CLINICAL",
             "position": "PREMIUM",
             "primary_color": "#C6A87C",
             "bg": "#F5F3F0",
@@ -94,30 +153,22 @@ NICHES_EXPECTED = [
         },
     ),
     (
-        "academia",
-        DemoInput(
-            business_name="Academia Performance Prime",
-            niche="academia",
-            city="Goiânia",
-            whatsapp="+5562999999999",
-            place_id="demo-academia",
-            evidence={"rating": 4.7, "total_ratings": 512, "specialties": ["musculação", "funcional"]},
-            location={
-                "address_line": "Av. Anhanguera, 450 — Centro",
-                "neighborhood": "Centro",
-                "city": "Goiânia",
-                "state": "GO",
-                "latitude": -16.6864,
-                "longitude": -49.2643,
-                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6864,-49.2643",
-                "source": "google_places",
-                "source_ref": "demo-academia",
-                "status": "verified",
-                "confidence": 0.9,
-            },
-        ),
+        "estetica_natural",
+        _estetica_demo(["facial"], place_id="demo-estetica-natural"),
         {
-            "personality": "performance_result",
+            "template_id": "NATURAL_ELEGANT",
+            "position": "NATURAL",
+            "primary_color": "#7A8B6F",
+            "bg": "#F7F5F0",
+            "accent": "#7A8B6F",
+            "archetype": "beleza_natural",
+        },
+    ),
+    (
+        "academia_performance",
+        _academia_demo(["musculação", "funcional"]),
+        {
+            "template_id": "PERFORMANCE_RESULT",
             "position": "PERFORMANCE",
             "primary_color": "#E63946",
             "bg": "#FFFFFF",
@@ -126,38 +177,27 @@ NICHES_EXPECTED = [
         },
     ),
     (
-        "barbearia",
-        DemoInput(
-            business_name="Barbearia Central",
-            niche="barbearia",
-            city="Goiânia",
-            whatsapp="+5562999999999",
-            place_id="demo-barbearia",
-            # VS-1: "barba"/"corte premium" → LUXURY (sem personalidade → bloqueio).
-            # Para publicar MODERN, evidência de especialidade fica vazia e o
-            # rating/volume resolve MODERN (rating ≥4.5 E volume ≥100).
-            evidence={"rating": 4.9, "total_ratings": 891, "specialties": []},
-            location={
-                "address_line": "Rua 3, 120 — Setor Central",
-                "neighborhood": "Setor Central",
-                "city": "Goiânia",
-                "state": "GO",
-                "latitude": -16.6799,
-                "longitude": -49.2550,
-                "google_maps_url": "https://www.google.com/maps/search/?api=1&query=-16.6799,-49.2550",
-                "source": "google_places",
-                "source_ref": "demo-barbearia",
-                "status": "verified",
-                "confidence": 0.9,
-            },
-        ),
+        "academia_natural",
+        _academia_demo(["pilates"], place_id="demo-academia-natural"),
         {
-            "personality": "bold_urban",
-            "position": "MODERN",
-            "primary_color": "#D4AF37",
-            "bg": "#1A1A1A",
-            "accent": "#D4AF37",
-            "archetype": "estilo_urbano",
+            "template_id": "NATURAL_ELEGANT",
+            "position": "NATURAL",
+            "primary_color": "#7A8B6F",
+            "bg": "#F7F5F0",
+            "accent": "#7A8B6F",
+            "archetype": "beleza_natural",
+        },
+    ),
+    (
+        "barbearia_luxury",
+        _barbearia_demo(["barba"]),
+        {
+            "template_id": "LUXURY_MINIMAL",
+            "position": "LUXURY",
+            "primary_color": "#C9A96A",
+            "bg": "#111111",
+            "accent": "#C9A96A",
+            "archetype": "luxo_sobrio",
         },
     ),
 ]
@@ -176,7 +216,7 @@ async def test_vs0_e2e_published(niche, demo, expected):
     result = await generate_demo(demo)
 
     assert result["status"] == "published", f"[{niche}] Falhou: {result}"
-    assert result["personality"] == expected["personality"], result
+    assert result["personality"] == expected["template_id"], result
     assert result["position"] == expected["position"], result
     assert result["url"].startswith("https://"), result
     assert result["primary_color"] == expected["primary_color"], result
@@ -187,7 +227,7 @@ async def test_vs0_e2e_published(niche, demo, expected):
 
 @pytest.mark.asyncio
 async def test_vs0_e2e_undetermined_niche_fails_without_publishing():
-    """Nicho fora do VS-0 falha de forma estruturada, sem chamar LLM nem R2."""
+    """Nicho fora do escopo VS-1 falha de forma estruturada, sem chamar LLM nem R2."""
     demo = DemoInput(
         business_name="Restaurante Central",
         niche="restaurante",
@@ -200,23 +240,26 @@ async def test_vs0_e2e_undetermined_niche_fails_without_publishing():
 
 
 @pytest.mark.asyncio
-async def test_vs0_e2e_luxury_barbearia_blocks_without_publishing():
-    """VS-1: barbearia + 'barba' → LUXURY → THEME_UNRESOLVED → bloqueio.
+async def test_vs0_e2e_same_position_reuses_same_template_across_niches():
+    """VS-2: estetica NATURAL e academia NATURAL publicam o MESMO template.
 
-    Não publica (posição sem personalidade no catálogo visual fechado VS-0).
-    Falha ANTES do LLM/R2 — não depende de credenciais.
+    Comprova a propriedade central do VS-2: posição igual ⇒ template igual,
+    independente do nicho. Requer credenciais reais (publish em R2).
     """
-    demo = DemoInput(
-        business_name="Barbearia Central",
-        niche="barbearia",
-        city="Goiânia",
-        whatsapp="+5562999999999",
-        place_id="demo-barbearia-luxury",
-        evidence={"rating": 4.9, "total_ratings": 891, "specialties": ["corte clássico", "barba"]},
+    if not _env_ready():
+        pytest.skip("Credenciais LLM/R2 ausentes — E2E real pulado")
+
+    estetica = await generate_demo(
+        _estetica_demo(["facial"], place_id="demo-estetica-natural-e2e")
     )
-    result = await generate_demo(demo)
-    assert result["status"] == "failed"
-    assert result["error"] == "THEME_UNRESOLVED"
+    academia = await generate_demo(
+        _academia_demo(["pilates"], place_id="demo-academia-natural-e2e")
+    )
+
+    assert estetica["status"] == "published", estetica
+    assert academia["status"] == "published", academia
+    assert estetica["personality"] == "NATURAL_ELEGANT"
+    assert academia["personality"] == "NATURAL_ELEGANT"
 
 
 def test_generate_tokens_is_deterministic():
@@ -228,4 +271,4 @@ def test_generate_tokens_is_deterministic():
     tokens_b, policy_b = generate_tokens(demo)
     assert tokens_a.model_dump() == tokens_b.model_dump()
     assert policy_a.personality == policy_b.personality
-    assert tokens_a.personality == "premium_clinical"
+    assert tokens_a.personality == "PREMIUM_CLINICAL"

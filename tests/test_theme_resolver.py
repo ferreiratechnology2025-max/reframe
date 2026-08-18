@@ -1,13 +1,15 @@
 """
-Testes do VisualThemeResolver (VS-0).
+Testes do VisualThemeResolver (VS-2).
 
-Mapeia (nicho, posicionamento) -> personalidade visual. Sem fallback
-silencioso: combinação não mapeada levanta ThemeResolutionError.
+VS-2: a resolução visual é 100% POSITION-DRIVEN. O nicho NÃO participa:
+posições iguais produzem o MESMO template, para qualquer nicho (inclusive
+nichos fora do mapa comercial). Sem fallback silencioso: posição fora do
+POSITION_TEMPLATE_MAP levanta ThemeResolutionError (prefixo THEME_UNRESOLVED).
 """
 import pytest
 
 from design_system.positioning import MarketPosition
-from design_system.visual_policy import VisualPersonality
+from design_system.visual_template import TEMPLATES
 from engines.theme_resolver import VisualThemeResolver, ThemeResolutionError
 
 
@@ -16,50 +18,53 @@ def resolver() -> VisualThemeResolver:
     return VisualThemeResolver()
 
 
-class TestThemeResolution:
-    def test_estetica_premium_maps_to_premium_clinical(self, resolver):
-        personality = resolver.resolve("estetica", MarketPosition.PREMIUM)
-        assert personality == VisualPersonality.PREMIUM_CLINICAL
+class TestPositionOnlyResolution:
+    @pytest.mark.parametrize("position,expected_id", [
+        (MarketPosition.PREMIUM, "PREMIUM_CLINICAL"),
+        (MarketPosition.PERFORMANCE, "PERFORMANCE_RESULT"),
+        (MarketPosition.NATURAL, "NATURAL_ELEGANT"),
+        (MarketPosition.LUXURY, "LUXURY_MINIMAL"),
+        (MarketPosition.TRADITIONAL, "ORGANIC_WARM"),
+        (MarketPosition.MODERN, "MODERN_TECH"),
+    ])
+    def test_position_resolves_to_template(self, resolver, position, expected_id):
+        template = resolver.resolve("estetica", position)
+        assert template.id == expected_id
 
-    def test_unmapped_position_raises(self, resolver):
-        """Sem fallback silencioso: posição não suportada -> erro estruturado."""
+    @pytest.mark.parametrize("position", [
+        MarketPosition.UNDETERMINED,
+        MarketPosition.MAINSTREAM,
+        MarketPosition.PRICE,
+        MarketPosition.INNOVATION,
+        MarketPosition.EXPERT,
+        MarketPosition.HERITAGE,
+        MarketPosition.COMMUNITY,
+    ])
+    def test_unmapped_position_raises(self, resolver, position):
         with pytest.raises(ThemeResolutionError) as exc:
-            resolver.resolve("estetica", MarketPosition.PERFORMANCE)
+            resolver.resolve("estetica", position)
         assert str(exc.value).startswith("THEME_UNRESOLVED:")
-        assert "PERFORMANCE" in str(exc.value)
 
     def test_undetermined_raises(self, resolver):
         with pytest.raises(ThemeResolutionError):
             resolver.resolve("estetica", MarketPosition.UNDETERMINED)
 
-    def test_unknown_niche_raises(self, resolver):
-        with pytest.raises(ThemeResolutionError):
-            resolver.resolve("dentista", MarketPosition.PREMIUM)
+    def test_niche_does_not_change_resolution(self, resolver):
+        """Mesma posição -> mesmo template, independente do nicho."""
+        for pos in [MarketPosition.PREMIUM, MarketPosition.NATURAL, MarketPosition.MODERN]:
+            ids = {
+                resolver.resolve(n, pos).id
+                for n in ["estetica", "academia", "barbearia", "novo_nicho"]
+            }
+            assert len(ids) == 1
 
-    def test_estetica_other_positions_raise(self, resolver):
-        for pos in (MarketPosition.NATURAL, MarketPosition.MAINSTREAM, MarketPosition.PERFORMANCE):
-            with pytest.raises(ThemeResolutionError):
-                resolver.resolve("estetica", pos)
+    def test_new_niche_resolves_any_position(self, resolver):
+        for pos in [MarketPosition.NATURAL, MarketPosition.LUXURY, MarketPosition.TRADITIONAL]:
+            template = resolver.resolve("qualquer_coisa", pos)
+            assert template in TEMPLATES.values()
 
     def test_determinism(self, resolver):
         assert (
             resolver.resolve("estetica", MarketPosition.PREMIUM)
-            == resolver.resolve("estetica", MarketPosition.PREMIUM)
+            is resolver.resolve("estetica", MarketPosition.PREMIUM)
         )
-
-    def test_academia_performance_maps_to_performance_result(self, resolver):
-        personality = resolver.resolve("academia", MarketPosition.PERFORMANCE)
-        assert personality == VisualPersonality.PERFORMANCE_RESULT
-
-    def test_barbearia_modern_maps_to_bold_urban(self, resolver):
-        personality = resolver.resolve("barbearia", MarketPosition.MODERN)
-        assert personality == VisualPersonality.BOLD_URBAN
-
-    def test_academia_wrong_position_raises(self, resolver):
-        """academia com posição errada não mapeia (sem fallback)."""
-        with pytest.raises(ThemeResolutionError):
-            resolver.resolve("academia", MarketPosition.PREMIUM)
-
-    def test_barbearia_wrong_position_raises(self, resolver):
-        with pytest.raises(ThemeResolutionError):
-            resolver.resolve("barbearia", MarketPosition.PERFORMANCE)

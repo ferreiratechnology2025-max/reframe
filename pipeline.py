@@ -71,8 +71,8 @@ def generate_tokens(demo: DemoInput) -> tuple[DesignTokens, VisualPolicy]:
         raise ValueError(
             f"POSITIONING_UNDETERMINED: nicho '{demo.niche}' fora do escopo VS-1"
         )
-    personality = VisualThemeResolver().resolve(demo.niche, positioning.market_position)
-    return DesignTokensEngine().generate(personality)
+    template = VisualThemeResolver().resolve(demo.niche, positioning.market_position)
+    return DesignTokensEngine().generate(template)
 
 
 async def generate_demo(demo: DemoInput) -> Dict[str, Any]:

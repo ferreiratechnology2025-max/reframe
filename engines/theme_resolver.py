@@ -1,39 +1,47 @@
 """
-VisualThemeResolver — mapeia (nicho, posicionamento) -> personalidade (VS-0).
+VisualThemeResolver — position → VisualTemplate (VS-2).
 
-Generalization Slice (VS-0.1): o mapa cobre estetica, academia e
-barbearia. Sem fallback silencioso: qualquer combinação não mapeada
-levanta ThemeResolutionError com prefixo THEME_UNRESOLVED (contrato da API).
+VS-2 desacopla a seleção visual do nicho: o resolver conhece APENAS a
+posição de mercado (MarketPosition). Nichos iguais alcançando a mesma
+posição produzem o MESMO template. O nicho NÃO participa da decisão.
+
+Sem fallback silencioso: posição fora do POSITION_TEMPLATE_MAP levanta
+ThemeResolutionError com prefixo THEME_UNRESOLVED (contrato da API).
 """
 from design_system.positioning import MarketPosition
-from design_system.visual_policy import VisualPersonality
+from design_system.visual_template import TEMPLATES, VisualTemplate
 
 
 class ThemeResolutionError(Exception):
-    """Combinação (nicho, posicionamento) não mapeada no catálogo."""
+    """Posição de mercado não mapeada no catálogo de templates."""
+
+
+# Mapa POSITION-ONLY: posição de mercado -> template (VS-2).
+# BOLD_URBAN permanece no catálogo como referência, mas NÃO está mapeado
+# (MODERN resolve para MODERN_TECH — decisão congelada).
+POSITION_TEMPLATE_MAP: dict[MarketPosition, VisualTemplate] = {
+    MarketPosition.PREMIUM: TEMPLATES["PREMIUM_CLINICAL"],
+    MarketPosition.PERFORMANCE: TEMPLATES["PERFORMANCE_RESULT"],
+    MarketPosition.NATURAL: TEMPLATES["NATURAL_ELEGANT"],
+    MarketPosition.LUXURY: TEMPLATES["LUXURY_MINIMAL"],
+    MarketPosition.TRADITIONAL: TEMPLATES["ORGANIC_WARM"],
+    MarketPosition.MODERN: TEMPLATES["MODERN_TECH"],
+}
 
 
 class VisualThemeResolver:
-    """Resolve a personalidade visual para o par nicho+posicionamento.
+    """Resolve o VisualTemplate para uma posição de mercado.
 
-    Catálogo fechado do VS-0. Qualquer posição fora do mapeamento
-    é uma falha estruturada — NUNCA um fallback silencioso para
-    evitar decisões de design arbitrárias.
+    Position-only (VS-2): o nicho é recebido apenas por compatibilidade de
+    assinatura, mas NÃO participa da resolução. Posições iguais produzem o
+    mesmo template, independente do nicho.
     """
 
-    # mapa (nicho, position) -> VisualPersonality
-    PERSONALITY_MAP: dict[tuple[str, MarketPosition], VisualPersonality] = {
-        ("estetica", MarketPosition.PREMIUM): VisualPersonality.PREMIUM_CLINICAL,
-        ("academia", MarketPosition.PERFORMANCE): VisualPersonality.PERFORMANCE_RESULT,
-        ("barbearia", MarketPosition.MODERN): VisualPersonality.BOLD_URBAN,
-    }
-
-    def resolve(self, niche: str, market_position: MarketPosition) -> VisualPersonality:
-        key = ((niche or "").strip().lower(), market_position)
-        personality = self.PERSONALITY_MAP.get(key)
-        if personality is None:
+    def resolve(self, niche: str, market_position: MarketPosition) -> VisualTemplate:
+        template = POSITION_TEMPLATE_MAP.get(market_position)
+        if template is None:
             raise ThemeResolutionError(
-                f"THEME_UNRESOLVED: (nicho='{niche}', position='{market_position.value}') "
-                "fora do catálogo VS-0"
+                f"THEME_UNRESOLVED: position='{market_position.value}' "
+                "fora do POSITION_TEMPLATE_MAP (VS-2)"
             )
-        return personality
+        return template

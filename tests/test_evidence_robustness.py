@@ -9,7 +9,6 @@ import pytest
 
 from design_system.evidence_positioning import EvidencePositioningEngine
 from design_system.positioning import MarketPosition
-from design_system.visual_policy import VisualPersonality
 from engines.design_tokens_engine import DesignTokensEngine
 from engines.theme_resolver import ThemeResolutionError, VisualThemeResolver
 from gates.design_token_gate import DesignTokenGate
@@ -24,10 +23,10 @@ class TestEvidenceRobustness:
         # facial→NATURAL, injetáveis→PREMIUM → prioridade PREMIUM vence
         assert pos.market_position == MarketPosition.PREMIUM
 
-        personality = VisualThemeResolver().resolve("estetica", pos.market_position)
-        assert personality == VisualPersonality.PREMIUM_CLINICAL
+        template = VisualThemeResolver().resolve("estetica", pos.market_position)
+        assert template.id == "PREMIUM_CLINICAL"
 
-        tokens, policy = DesignTokensEngine().generate(personality)
+        tokens, policy = DesignTokensEngine().generate(template)
         passed, issues = DesignTokenGate().validate(tokens, policy)
         assert passed, issues
 
@@ -36,8 +35,8 @@ class TestEvidenceRobustness:
         pos = EvidencePositioningEngine().determine("estetica", minimal_evidence)
         assert pos.market_position == MarketPosition.PREMIUM  # base por nicho
 
-        personality = VisualThemeResolver().resolve("estetica", pos.market_position)
-        assert personality == VisualPersonality.PREMIUM_CLINICAL
+        template = VisualThemeResolver().resolve("estetica", pos.market_position)
+        assert template.id == "PREMIUM_CLINICAL"
 
     def test_unmapped_niche_fails_regardless_of_evidence(self, complete_evidence):
         """Nicho não mapeado → UNDETERMINED → falha (evidência não salva)."""
@@ -52,8 +51,8 @@ class TestEvidenceRobustness:
         pos = EvidencePositioningEngine().determine("estetica", minimal_evidence)
         assert pos.market_position == MarketPosition.PREMIUM
 
-        personality = VisualThemeResolver().resolve("estetica", pos.market_position)
-        tokens, policy = DesignTokensEngine().generate(personality)
+        template = VisualThemeResolver().resolve("estetica", pos.market_position)
+        tokens, policy = DesignTokensEngine().generate(template)
 
         passed, issues = DesignTokenGate().validate(tokens, policy)
         assert passed, issues

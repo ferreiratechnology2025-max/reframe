@@ -58,10 +58,10 @@ class DesignTokenGate:
             issues.append("accent idêntico a bg — CTA invisível")
 
         # 5) Coesão da política visual.
-        if policy is not None and tokens.personality != policy.personality.value:
+        if policy is not None and tokens.personality != policy.personality:
             issues.append(
                 f"personality do tokens ({tokens.personality}) diverge da política "
-                f"({policy.personality.value})"
+                f"({policy.personality})"
             )
 
         return (not issues, issues)

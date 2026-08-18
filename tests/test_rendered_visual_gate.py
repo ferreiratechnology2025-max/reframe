@@ -15,7 +15,7 @@ from design_system.design_tokens import (
     SemanticColor,
     TypographyPolicy,
 )
-from design_system.visual_policy import CATALOG, VisualPersonality, LocationPolicy, VisualPolicy
+from design_system.visual_template import TEMPLATES
 from gates.rendered_visual_gate import RenderedVisualGate
 
 # HTML autocontido que MIMA a saída do template premium (mesma estrutura
@@ -89,8 +89,8 @@ def chromium_browser():
 
 
 @pytest.fixture
-def policy() -> VisualPolicy:
-    return CATALOG[VisualPersonality.PREMIUM_CLINICAL]
+def policy():
+    return TEMPLATES["PREMIUM_CLINICAL"].policy
 
 
 @pytest.fixture
