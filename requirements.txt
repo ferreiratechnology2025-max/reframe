@@ -2,7 +2,7 @@
 # REFRAME - Requirements consolidados (fonte unica de verdade)
 # Baseline 2026-08-17
 # Baseado nos imports reais do codigo. Substitui o antigo
-# requirements.txt da raiz e o api/requirements.txt.
+# requirements.txt da raiz e o api/requirements.txt (removidos).
 # ============================================================
 
 # --- Core ---

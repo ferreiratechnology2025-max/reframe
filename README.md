@@ -181,8 +181,7 @@ pip install -r requirements.txt
 cp .env.example .env   # preencha as credenciais
 python main.py
 
-# API
-pip install -r api/requirements.txt
+# API (usa as dependências da raiz)
 python api/run.py      # http://localhost:8000
 
 # UI
