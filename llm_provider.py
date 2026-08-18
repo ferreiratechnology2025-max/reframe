@@ -240,7 +240,7 @@ def generate_proposal_with_fallback(
         f"genérica mas honesta para essa parte, sem alegar horário, promoção, prêmio ou "
         f"diferencial que não esteja explicitamente listado acima.\n"
         f"\n"
-        f"Contexto: {json.dumps({k: v for k, v in trusted_business.items() if k != 'evidence'}, ensure_ascii=False)}\n\n"
+        f"Contexto: {json.dumps({k: v for k, v in trusted_business.items() if k not in ('evidence', 'location')}, ensure_ascii=False)}\n\n"
         f"Estrutura JSON obrigatória:\n"
         f"{{\n"
         f'  "copywriting": {{\n'

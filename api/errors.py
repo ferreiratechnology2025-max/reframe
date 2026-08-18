@@ -39,6 +39,13 @@ class ErrorCode(str, Enum):
     EVIDENCE_TIME_INTERPRETATION = "EVIDENCE_TIME_INTERPRETATION"
     EVIDENCE_GENERATION_ERROR = "EVIDENCE_GENERATION_ERROR"
 
+    # Design System Engine (VS-0) — falhas determinísticas de posicionamento/
+    # tema/tokens/render. Não-transitórias: retentar não muda o resultado.
+    POSITIONING_UNDETERMINED = "POSITIONING_UNDETERMINED"
+    THEME_UNRESOLVED = "THEME_UNRESOLVED"
+    DESIGN_TOKEN_GATE_FAILED = "DESIGN_TOKEN_GATE_FAILED"
+    RENDERED_VISUAL_GATE_FAILED = "RENDERED_VISUAL_GATE_FAILED"
+
 # Mapeamento de mensagens amigáveis por código
 USER_MESSAGES: Dict[ErrorCode, str] = {
     ErrorCode.LLM_AUTH_ERROR: "Credenciais do provedor de IA inválidas. Verifique sua chave de API.",
@@ -61,6 +68,10 @@ USER_MESSAGES: Dict[ErrorCode, str] = {
     ErrorCode.EVIDENCE_UNSUPPORTED_INFERENCE: "Inferência não suportada pelas evidências.",
     ErrorCode.EVIDENCE_TIME_INTERPRETATION: "Horário foi interpretado de forma imprecisa.",
     ErrorCode.EVIDENCE_GENERATION_ERROR: "Erro ao validar integridade das evidências.",
+    ErrorCode.POSITIONING_UNDETERMINED: "Não foi possível determinar posicionamento para este nicho.",
+    ErrorCode.THEME_UNRESOLVED: "Nenhum tema visual disponível para este posicionamento.",
+    ErrorCode.DESIGN_TOKEN_GATE_FAILED: "Falha na validação dos tokens de design.",
+    ErrorCode.RENDERED_VISUAL_GATE_FAILED: "Falha na validação visual da página renderizada.",
 }
 
 
@@ -131,5 +142,12 @@ def is_retryable_error(code: ErrorCode) -> bool:
         ErrorCode.EVIDENCE_ENTITY_SUBSTITUTION,
         ErrorCode.EVIDENCE_UNSUPPORTED_INFERENCE,
         ErrorCode.EVIDENCE_TIME_INTERPRETATION,
+        # Falhas do Design System Engine (VS-0): determinísticas, o resultado
+        # não muda com retry — o pipeline precisa de uma decisão (ex: mapear
+        # o nicho, corrigir a política de tokens) antes de tentar de novo.
+        ErrorCode.POSITIONING_UNDETERMINED,
+        ErrorCode.THEME_UNRESOLVED,
+        ErrorCode.DESIGN_TOKEN_GATE_FAILED,
+        ErrorCode.RENDERED_VISUAL_GATE_FAILED,
     }
     return code not in NON_RETRYABLE

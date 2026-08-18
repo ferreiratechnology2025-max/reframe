@@ -1,5 +1,6 @@
 import os
 import re
+import asyncio
 import logging
 import unicodedata
 from pathlib import Path
@@ -7,11 +8,22 @@ from typing import Any, Callable, Dict, Optional, Tuple
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from models import ProposalTemplateData, CommercialEvidence, slugify
+from models import ProposalTemplateData, CommercialEvidence, slugify, BusinessData
 from llm_provider import generate_proposal_with_fallback
 from publisher import publish_to_r2
 from config.archetypes import ARCHETYPES_CONFIG
 from validate_evidence_integrity import EvidenceIntegrityValidator
+
+# ─── Design System Engine (VS-0) ─────────────────────────────────────
+from design_system.design_tokens import ColorRole, DesignTokens, FontSpec, SemanticColor, TypographyPolicy
+from design_system.location import BusinessLocation
+from engines.positioning_engine import PositioningEngine
+from engines.theme_resolver import VisualThemeResolver, ThemeResolutionError
+from engines.design_tokens_engine import DesignTokensEngine
+from gates.design_token_gate import DesignTokenGate
+from gates.rendered_visual_gate import RenderedVisualGate
+
+from api.errors import extract_error_code
 
 # Carrega variáveis de ambiente do .env
 load_dotenv()
@@ -152,6 +164,58 @@ def _evidence_integrity_gate(proposal_data: ProposalTemplateData) -> None:
         )
 
 
+def _run_visual_gate_sync(html: str, policy, niche: str) -> tuple[bool, list]:
+    """Executa o RenderedVisualGate (Playwright + Chromium headless)."""
+    from playwright.sync_api import sync_playwright
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        try:
+            return RenderedVisualGate().validate(html, browser, policy, niche=niche)
+        finally:
+            browser.close()
+
+
+async def _run_visual_gate(html: str, policy, niche: str) -> tuple[bool, list]:
+    """Wrapper async: roda o gate síncrono em thread (Playwright Sync não pode
+    rodar dentro do loop asyncio)."""
+    return await asyncio.to_thread(_run_visual_gate_sync, html, policy, niche)
+
+
+def _archetype_tokens_css(primary_color: str) -> str:
+    """Tokens mínimos para o caminho LEGACY (process_lead/CLI).
+
+    O legacy usa a cor primária do arquétipo como accent. Não passa pelo
+    DesignTokenGate (é caminho antigo); o novo fluxo (generate_landing)
+    usa o DesignTokensEngine e passa por todos os gates.
+    """
+    tokens = DesignTokens(
+        personality="legacy",
+        colors={
+            ColorRole.BG: "#FAFAF7",
+            ColorRole.SURFACE: "#FFFFFF",
+            ColorRole.TEXT: "#1A1A1A",
+            ColorRole.TEXT_SECONDARY: "#4A4A4A",
+            ColorRole.HEADING: "#1A1A1A",
+            ColorRole.BORDER: "#E5E7EB",
+            ColorRole.ACCENT: primary_color,
+            ColorRole.ACCENT_HOVER: primary_color,
+            ColorRole.ON_ACCENT: "#FFFFFF",
+        },
+        semantic_colors={
+            SemanticColor.SUCCESS: "#2E7D32",
+            SemanticColor.WARNING: "#B26A00",
+            SemanticColor.ERROR: "#C62828",
+            SemanticColor.INFO: "#1565C0",
+        },
+        typography=TypographyPolicy(
+            heading=FontSpec(family="Inter", source="system", weights=[400, 600]),
+            body=FontSpec(family="Inter", source="system", weights=[400, 500]),
+        ),
+    )
+    return tokens.get_css_variables()
+
+
 def process_lead(trusted_business: dict) -> str | None:
     place_id = trusted_business.get('place_id', 'UNKNOWN')
     logging.info(f"Iniciando processamento: {trusted_business.get('name')} ({place_id})")
@@ -195,6 +259,9 @@ def process_lead(trusted_business: dict) -> str | None:
 
     data_dict = proposal_data.model_dump()
     data_dict['hero_image_url'] = hero_image_url
+    data_dict['tokens_css'] = _archetype_tokens_css(config["primary_color"])
+    data_dict['font_links'] = ""
+    data_dict['location'] = trusted_business.get("location")
 
     html_final = template.render(data=data_dict)
 
@@ -216,38 +283,41 @@ async def generate_landing(
     place_id: Optional[str] = None,
     lead_id: Optional[str] = None,
     evidence: Optional[CommercialEvidence] = None,
+    location: Optional[BusinessLocation] = None,
     on_progress: Optional[Callable[[str], None]] = None
 ) -> Dict[str, Any]:
     """
-    Função de entrada principal do pipeline, exportável para a API.
+    Função de entrada principal do pipeline — ORQUESTRAÇÃO (VS-0).
 
-    Encapsula toda a lógica de geração reutilizando os componentes existentes.
-    Pode ser chamada pela CLI, por scripts ou pela API (via adaptador).
+    O novo fluxo NÃO depende do legacy (resolve_archetype/get_archetype_or_fail):
+    nicho não mapeado no Design System simplesmente falha com código estável
+    (POSITIONING_UNDETERMINED/THEME_UNRESOLVED) em vez de ser barrado antes
+    de chegar ao sistema de design.
+
+    Fluxo:
+      Evidence → Positioning (determinístico) → Theme Resolver → Design Tokens
+      → DesignTokenGate → LLM Copy → Evidence Integrity Gate → Render
+      → RenderedVisualGate → Publish.
+
+    O LLM escreve SOMENTE a copy; posicionamento, tema e tokens são decisões
+    determinísticas do Design System Engine.
 
     Args:
         lead_name: Nome do negócio.
-        niche: Nicho (ex: "padaria artesanal").
+        niche: Nicho (ex: "estetica").
         city: Cidade do negócio.
         phone: Telefone (normalizado por BusinessData).
-        place_id: ID do Google Places (opcional, usado para slug — prioridade máxima).
-        lead_id: ID interno do lead (opcional; ex: api/app.py Lead.id). Usado
-            para derivar o slug quando não há place_id real — ver
-            resolve_place_id(). Garantidamente único dentro do sistema,
-            então é preferido sobre o hash sintético de nome+nicho+cidade.
-        evidence: Evidências comerciais (horário, ofertas, diferenciais, etc)
-            usadas pelo LLM como única fonte de fatos específicos — ver
-            models.CommercialEvidence. Opcional; sem evidência, o LLM é
-            instruído a não inventar esses fatos (Fase 16).
+        place_id: ID do Google Places (opcional, usado para slug).
+        lead_id: ID interno do lead (opcional).
+        evidence: Evidências comerciais (única fonte de fatos para o LLM).
+        location: Localização determinística (VS-0).
         on_progress: Callback de progresso recebendo o estágio atual.
 
     Returns:
-        Dict com os resultados finais (archetype_name, primary_color,
-        hero_image, proofs, headline, subheadline, cta, url).
-
-    Raises:
-        ValueError: Se o nicho não tiver arquétipo mapeado (ARCHETYPE_NOT_SUPPORTED)
-            ou se a geração de copy falhar após todas as tentativas.
-        Exception: Se a publicação no R2 falhar.
+        Dict com status ("published" ou "failed") + dados. Em falha de
+        posicionamento/tema/tokens/render, retorna {"status": "failed",
+        "error": <ErrorCode>, ...} — o pipeline_adapter traduz para o status
+        correto da geração (ver api/pipeline_adapter.py::run).
     """
     trusted_business = {
         "name": lead_name,
@@ -257,35 +327,63 @@ async def generate_landing(
         "phone": phone,
         "evidence": evidence or CommercialEvidence(),
     }
+    if location is not None:
+        trusted_business["location"] = location
 
-    # 1. Resolução do Arquétipo (fail-fast: sem arquétipo mapeado, nem chama o LLM)
-    archetype_key, config = get_archetype_or_fail(niche)
+    # ── 1. POSITIONING (determinístico — nunca LLM) ──────────────────
+    positioning = PositioningEngine().determine(
+        niche=niche, evidence=trusted_business["evidence"], location=location
+    )
+    if positioning.is_undetermined:
+        return {
+            "status": "failed",
+            "error": "POSITIONING_UNDETERMINED",
+            "detail": "; ".join(positioning.decision_reasons),
+            "segment": positioning.segment,
+        }
+
+    # ── 2. THEME RESOLVER (sem fallback silencioso) ──────────────────
+    try:
+        personality = VisualThemeResolver().resolve(niche, positioning.market_position)
+    except ThemeResolutionError as e:
+        return {"status": "failed", "error": "THEME_UNRESOLVED", "detail": str(e)}
+
+    # ── 3. DESIGN TOKENS + POLICY (determinísticos) ──────────────────
+    tokens, policy = DesignTokensEngine().generate(personality)
+
+    # ── 4. DESIGN TOKEN GATE (ANTES do LLM) ──────────────────────────
+    passed, issues = DesignTokenGate().validate(tokens, policy)
+    if not passed:
+        return {
+            "status": "failed",
+            "error": "DESIGN_TOKEN_GATE_FAILED",
+            "issues": issues,
+            "personality": personality.value,
+        }
 
     if on_progress:
         on_progress("generating")
 
-    # 2. Geração de Proposta (LLM com fallback) — mesma lógica do process_lead
+    # ── 5. LLM COPY (o LLM só escreve copy) ──────────────────────────
     proposal_data = generate_proposal_with_fallback(trusted_business)
     if not proposal_data:
-        raise ValueError(
-            f"Falha na geração de copy para '{lead_name}' após todas as tentativas."
-        )
+        return {
+            "status": "failed",
+            "error": "GENERATION_FAILED",
+            "detail": f"Falha na geração de copy para '{lead_name}' após todas as tentativas.",
+        }
 
-    # 2.5. Gate de Integridade de Evidências (Fase 17.1A) — bloqueia
-    # publicação se o LLM distorceu um fato verificável. Levanta ValueError
-    # estruturado ("EVIDENCE_INTEGRITY_FAIL: ...") reconhecido por
-    # api/errors.py, propagado ao pipeline_adapter sem retry (não-transitório).
-    _evidence_integrity_gate(proposal_data)
-
-    # 3. Aplicação do Arquétipo Determinístico
-    proposal_data.copywriting.proofs = config["trust_signals"]
-    proposal_data.assets.primary_color = config["primary_color"]
-    hero_image_url = config["hero_image"]
+    # ── 6. EVIDENCE INTEGRITY GATE (a copy não pode distorcer fatos) ─
+    try:
+        _evidence_integrity_gate(proposal_data)
+    except ValueError as e:
+        code = extract_error_code(str(e)) or "EVIDENCE_INTEGRITY_FAIL"
+        return {"status": "failed", "error": code, "detail": str(e)}
 
     if on_progress:
         on_progress("rendering")
 
-    # 4. Renderização do Template
+    # ── 7. RENDER com tokens (hex vive só no bloco :root) ────────────
     env = Environment(
         loader=FileSystemLoader(Path(__file__).parent / 'templates'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -293,26 +391,43 @@ async def generate_landing(
     template = env.get_template('premium.html')
 
     data_dict = proposal_data.model_dump()
-    data_dict['hero_image_url'] = hero_image_url
+    data_dict['hero_image_url'] = policy.hero_image
+    data_dict['tokens_css'] = tokens.get_css_variables()
+    data_dict['font_links'] = tokens.get_font_links()
+    data_dict['location'] = location.model_dump() if location is not None else None
 
     html_final = template.render(data=data_dict)
+
+    # ── 8. RENDERED VISUAL GATE (Playwright, 3 viewports) ────────────
+    passed, issues = await _run_visual_gate(html_final, policy, niche)
+    if not passed:
+        return {
+            "status": "failed",
+            "error": "RENDERED_VISUAL_GATE_FAILED",
+            "issues": issues,
+            "personality": personality.value,
+        }
 
     if on_progress:
         on_progress("publishing")
 
-    # 5. Publicação no R2
+    # ── 9. PUBLISH (R2) ──────────────────────────────────────────────
     final_url = publish_to_r2(proposal_data, html_final)
     logging.info(f"Publicado pela API: {final_url}")
 
     return {
-        "archetype_name": archetype_key,
-        "primary_color": config["primary_color"],
-        "hero_image": hero_image_url,
-        "proofs": config["trust_signals"],
+        "status": "published",
+        "url": final_url,
+        "personality": personality.value,
+        "archetype_name": policy.archetype.value,
+        "position": positioning.market_position.value,
+        "primary_color": tokens.colors[ColorRole.ACCENT],
+        "hero_image": policy.hero_image,
+        "proofs": proposal_data.copywriting.proofs,
         "headline": proposal_data.copywriting.headline,
         "subheadline": proposal_data.copywriting.subheadline,
         "cta": proposal_data.copywriting.cta_whatsapp,
-        "url": final_url,
+        "tokens": tokens.model_dump(mode="json"),
     }
 
 

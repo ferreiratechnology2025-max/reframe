@@ -5,6 +5,8 @@ from typing import Dict, List, Literal, Optional
 from urllib.parse import quote
 from pydantic import BaseModel, Field, model_validator, computed_field, field_validator, ValidationError
 
+from design_system.location import BusinessLocation
+
 
 def dns_safe_suffix(place_id: str) -> str:
     """Hash hex só com [a-f0-9], DNS seguro. Resolve _ do place_id."""
@@ -121,6 +123,10 @@ class BusinessData(BaseModel):
     phone: str = Field(default="")
     slug: str = Field(default="")
     evidence: CommercialEvidence = Field(default_factory=CommercialEvidence)
+    location: Optional["BusinessLocation"] = Field(
+        default=None,
+        description="Localização determinística (VS-0). O LLM NÃO toca nela.",
+    )
 
     @field_validator('phone')
     @classmethod

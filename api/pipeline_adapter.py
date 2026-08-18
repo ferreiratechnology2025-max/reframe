@@ -73,6 +73,15 @@ class PipelineAdapter:
             # Chama o pipeline com gerenciamento de retry inteligente
             result = await PipelineAdapter._run_with_retry(gen, lead, progress, evidence=evidence)
 
+            # VS-0: o pipeline retorna {"status": "failed", "error": <ErrorCode>, ...}
+            # em falhas determinísticas (posicionamento/tema/tokens/render). Traduz
+            # para exceção estruturada para o mesmo caminho de classificação abaixo —
+            # senão uma falha seria marcada como "published" com campos vazios.
+            if result.get("status") == "failed":
+                raise ValueError(
+                    f"{result.get('error', 'PIPELINE_ERROR')}: {result.get('detail') or result.get('issues')}"
+                )
+
             # Atualiza com os resultados
             gen.status = "published"
             gen.archetype_name = result.get("archetype_name")
