@@ -46,4 +46,5 @@ Thumbs.db
 
 # --- Logs e temporários ---
 *.log
-*.tmp
+*.tmp.env.*
+!.env.example
