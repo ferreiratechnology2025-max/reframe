@@ -48,3 +48,11 @@ Thumbs.db
 *.log
 *.tmp.env.*
 !.env.example
+.env.*
+*.env
+node_modules/
+*.pyc
+*.sqlite
+*.sqlite3
+*.gguf
+*.onnx
